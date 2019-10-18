@@ -17,7 +17,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- begin::Head -->
 <head>
     <meta charset="utf-8"/>
-    <title>Metronic | Dashboard</title>
+
+    <title>@yield('title')</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -27,7 +28,7 @@ License: You must have a valid license purchased only from themeforest(the above
         WebFont.load({
             google: {
                 "families": ["Montserrat:300,400,500,600,700", "Roboto:300,400,500,600,700"]
-            },   
+            },
             active: function () {
                 sessionStorage.fonts = true;
             }
@@ -37,22 +38,22 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Web font -->
 
     <!--begin::Page Vendors Styles -->
-    <link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css"/>
-
+    <link href="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
+          type="text/css"/>
     <!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
     <!--end::Page Vendors Styles -->
 
     <!--begin::Base Styles -->
-    <link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/vendors/base/vendors.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
     <!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-    <link href="assets/demo/demo3/base/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/demo/demo3/base/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
     <!--RTL version:<link href="assets/demo/demo3/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-
+    @yield('style')
     <!--end::Base Styles -->
-    <link rel="shortcut icon" href="assets/demo/demo3/media/img/logo/favicon.ico"/>
+    <link rel="shortcut icon" href="{{ asset('assets/demo/demo3/media/img/logo/favicon.ico') }}"/>
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -73,7 +74,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- end::Head -->
 
 <!-- begin::Body -->
-<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<body
+    class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 
 <!-- begin:: Page -->
 <!-- BEGIN: Header -->
@@ -89,8 +91,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- end:: Body -->
 
 <!-- begin::Footer -->
-@include('backend.layout.footer')
-<!-- end:: Page -->
 
 <!-- begin::Quick Sidebar -->
 @include('backend.layout.messenger')
@@ -126,18 +126,23 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- begin::Quick Nav -->
 
 <!--begin::Base Scripts -->
-<script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-<script src="assets/demo/demo3/base/scripts.bundle.js" type="text/javascript"></script>
+<script src="{{ asset('assets/vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/demo/demo3/base/scripts.bundle.js') }}" type="text/javascript"></script>
+
+{{--<!--end::Base Scripts -->--}}
+
+{{--<!--begin::Page Vendors Scripts -->--}}
+{{--<script src="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>--}}
+
+{{--<!--end::Page Vendors Scripts -->--}}
+
+{{--<!--begin::Page Snippets -->--}}
+{{--<script src="{{ asset('assets/app/js/dashboard.js') }}" type="text/javascript"></script>--}}
+
 
 <!--end::Base Scripts -->
-
+@yield('script')
 <!--begin::Page Vendors Scripts -->
-<script src="assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
-
-<!--end::Page Vendors Scripts -->
-
-<!--begin::Page Snippets -->
-<script src="assets/app/js/dashboard.js" type="text/javascript"></script>
 
 <!--end::Page Snippets -->
 </body>

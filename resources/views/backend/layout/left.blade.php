@@ -15,27 +15,29 @@
                 </a>
             </li>
             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
-                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <a href="{{ route('users.index') }}" class="m-menu__link m-menu__toggle">
                     <span class="m-menu__item-here"></span>
-                    <i class="m-menu__link-icon flaticon-open-box"></i>
-                    <span class="m-menu__link-text">Layouts</span>
+                    <i class="m-menu__link-icon flaticon-user"></i>
+                    <span class="m-menu__link-text">Users</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="m-menu__submenu ">
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-											<span class="m-menu__link">
-												<span class="m-menu__item-here"></span>
-												<span class="m-menu__link-text">Layouts</span>
-											</span>
+                        <li class="m-menu__item " aria-haspopup="true">
+                            <a href="{{ route('users.index') }}" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">Danh sách người dùng</span>
+                            </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
                             <a href="builder.html" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">Layout Builder</span>
+                                <span class="m-menu__link-text">Thêm mới</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
@@ -43,7 +45,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">Boxed Layout</span>
+                                <span class="m-menu__link-text">Phân quyền</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
@@ -51,27 +53,27 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">Right Sidebar</span>
+                                <span class="m-menu__link-text">Hồ sơ của bạn</span>
                             </a>
                         </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="builder.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Fixed Footer</span>
-                            </a>
-                        </li>
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="builder.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Fixed Footer</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                     </ul>
                 </div>
             </li>
             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
-                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <a href="#" class="m-menu__link m-menu__toggle">
                     <span class="m-menu__item-here"></span>
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-book"></i>
                     <span class="m-menu__link-title">
 										<span class="m-menu__link-wrap">
-											<span class="m-menu__link-text">Reports</span>
+											<span class="m-menu__link-text">Bài viết</span>
 											<span class="m-menu__link-badge">
 												<span class="m-badge m-badge--danger">2</span>
 											</span>
@@ -98,27 +100,27 @@
                         <li class="m-menu__item " aria-haspopup="true">
                             <a href="inner.html" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-pie-chart"></i>
-                                <span class="m-menu__link-text">Finance Reports</span>
+                                <span class="m-menu__link-text">Tất cả bài viết</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                             <a href="inner.html" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-line-graph"></i>
-                                <span class="m-menu__link-text">Accouning Audit</span>
+                                <span class="m-menu__link-text">Thêm bài viết mới</span>
                             </a>
                         </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-statistics"></i>
-                                <span class="m-menu__link-text">Investments</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-icon flaticon-coins"></i>
-                                <span class="m-menu__link-text">Sales</span>
-                            </a>
-                        </li>
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-icon flaticon-statistics"></i>--}}
+{{--                                <span class="m-menu__link-text">Investments</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-icon flaticon-coins"></i>--}}
+{{--                                <span class="m-menu__link-text">Sales</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                     </ul>
                 </div>
             </li>

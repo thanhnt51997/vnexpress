@@ -2226,6 +2226,4 @@
 
         <!--End::Section-->
     </div>
-</div>
-</div>
 @endsection

@@ -13,6 +13,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    Route::get('/', 'DashboardController@index')->name('master.layout');
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/', 'DashboardController@index')->name('dashboard.index');
+    Route::resource('users', 'UserController');
 });
+
+
