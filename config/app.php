@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
     'paginate' => env('PAGINATE'),
+    'active' => env('ACTIVE'),
+    'block' => env('BLOCK'),
 
     /*
     |--------------------------------------------------------------------------
