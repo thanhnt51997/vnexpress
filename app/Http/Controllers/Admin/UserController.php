@@ -12,18 +12,27 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $user;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function __construct(User $user)
     {
-        $users = User::paginate(config('app.paginate'));
-        $data = [
-            'users' => $users
-        ];
-        return view('backend.users.index', $data);
+        $this->user = $user;
+        $this->authorize('admin');
+    }
+
+    public function index(Request $request)
+    {
+        $users = $this->user->paginate(config('app.paginate'));
+//        dd($users);
+        if ($request->ajax()) {
+            return view('backend.users.dataTable', ['users' => $users])->render();
+        }
+
+        return view('backend.users.index', compact('users'));
     }
 
     /**
@@ -132,7 +141,6 @@ class UserController extends Controller
         if (empty($user_info)) {
             $error = 'Người dùng không tồn tại!';
             return $error;
-
         }
         $request['password'] = Hash::make($request->password);
         $input = $request->all();
@@ -149,13 +157,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function validateUpdate($user_info, $input)
+        public function validateUpdate($user_info, $input)
     {
         $message = null;
         $this->validateData($input);
-        if (!empty($email)) {
-            $message = 'Email đã tồn tại. Vui lòng kiểm tra lại';
-        }
         $email = User::where('email', $input['email'])->where('id', '<>', $user_info->id)->first();
         if (!empty($email)) {
             $message = 'Email đã tồn tại. Vui lòng kiểm tra lại';

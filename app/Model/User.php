@@ -44,10 +44,27 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    public function isSuperAdmin()
+    {
+        /**
+         * Here goes your logic to determine which users are "super_admin"
+         *
+         * For example, in case you have a'is_super_admin' boolean column
+         * in your database, you could do:
+         */
+
+        return $this->role()->where('name', 'admin')->exists();
+    }
+
+        protected $dates = ['deleted_at'];
 
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

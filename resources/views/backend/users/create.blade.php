@@ -114,7 +114,7 @@
                             <label class="col-form-label  el col-lg-3 col-sm-12">Tên hiển thị *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <input type="text" class="form-control m-input" name="name"
-                                       placeholder="Enter username">
+                                       placeholder="Enter username...">
                                 <p class="font-weight-bold text-danger">{{ $errors->first('name') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
@@ -125,7 +125,7 @@
                             <label class="col-form-label el col-lg-3 col-sm-12">Email *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <input type="text" class="form-control m-input" name="email"
-                                       placeholder="Enter email">
+                                       placeholder="Enter email.....">
                                 <p class="font-weight-bold text-danger">{{ $errors->first('email') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
@@ -190,5 +190,4 @@
 @endsection
 @section('script')
     @include('backend.users.createScript')
-{{--    <script src="{{ asset('backend/js/vnexpress.blade.php') }}" type="text/javascript"></script>--}}
 @endsection

@@ -41,16 +41,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Page Vendors Styles -->
     <link href="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
           type="text/css"/>
-    <!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-
-    <!--end::Page Vendors Styles -->
-
-    <!--begin::Base Styles -->
     <link href="{{ asset('assets/vendors/base/vendors.bundle.css') }}" rel="stylesheet" type="text/css"/>
-
-    <!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
     <link href="{{ asset('assets/demo/demo3/base/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
-    <!--RTL version:<link href="assets/demo/demo3/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
     @yield('style')
     <!--end::Base Styles -->
     <link rel="shortcut icon" href="{{ asset('assets/demo/demo3/media/img/logo/favicon.ico') }}"/>
@@ -79,8 +71,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!-- begin:: Page -->
 <!-- BEGIN: Header -->
-@include('backend.layout.header')
 
+@include('backend.layout.header')
 <!-- END: Header -->
 
 <!-- begin::Body -->
@@ -94,6 +86,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!-- begin::Quick Sidebar -->
 @include('backend.layout.messenger')
+
 <!-- end::Quick Sidebar -->
 
 <!-- begin::Scroll Top -->
@@ -101,39 +94,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <i class="la la-arrow-up"></i>
 </div>
 
-<!-- end::Scroll Top -->
 
-<!-- begin::Quick Nav -->
-{{--<ul class="m-nav-sticky" style="margin-top: 30px;">--}}
-{{--    <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Purchase" data-placement="left">--}}
-{{--        <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes"--}}
-{{--           target="_blank">--}}
-{{--            <i class="la la-cart-arrow-down"></i>--}}
-{{--        </a>--}}
-{{--    </li>--}}
-{{--    <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Documentation" data-placement="left">--}}
-{{--        <a href="https://keenthemes.com/metronic/documentation.html" target="_blank">--}}
-{{--            <i class="la la-code-fork"></i>--}}
-{{--        </a>--}}
-{{--    </li>--}}
-{{--    <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Support" data-placement="left">--}}
-{{--        <a href="https://keenthemes.com/forums/forum/support/metronic5/" target="_blank">--}}
-{{--            <i class="la la-life-ring"></i>--}}
-{{--        </a>--}}
-{{--    </li>--}}
-{{--</ul>--}}
-
-<!-- begin::Quick Nav -->
-
-<!--begin::Base Scripts -->
 <script src="{{ asset('assets/vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/demo/demo3/base/scripts.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/demo/default/base/scripts.bundle.js') }}" type="text/javascript"></script>
 
 {{--<!--end::Base Scripts -->--}}
 
 {{--<!--begin::Page Vendors Scripts -->--}}
-{{--<script src="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>--}}
+<script src="{{ asset('assets/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>
 
 {{--<!--end::Page Vendors Scripts -->--}}
 

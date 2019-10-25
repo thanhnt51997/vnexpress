@@ -1,11 +1,10 @@
 @extends('master.layout')
-@section('title', 'Sửa thông tin người dùng ')
+@section('title', 'Thêm bài viết mới ')
 @section('content')
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
         <div class="m-subheader ">
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator">Thêm mới người dùng</h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
                             <a href="{{ route('admin') }}" class="m-nav__link m-nav__link--icon">
@@ -14,14 +13,14 @@
                         </li>
                         <li class="m-nav__separator">-</li>
                         <li class="m-nav__item">
-                            <a href="{{ route('users.index') }}" class="m-nav__link">
-                                <span class="m-nav__link-text">Users</span>
+                            <a href="{{ route('posts.index') }}" class="m-nav__link">
+                                <span class="m-nav__link-text">Posts</span>
                             </a>
                         </li>
                         <li class="m-nav__separator">-</li>
                         <li class="m-nav__item">
                             <a href="#" class="m-nav__link">
-                                <span class="m-nav__link-text">Sửa thông tin user</span>
+                                <span class="m-nav__link-text">Thêm mới</span>
                             </a>
                         </li>
                     </ul>
@@ -89,16 +88,18 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Sửa thông tin người dùng
+                                Thêm bài viết mới
                             </h3>
                         </div>
                     </div>
                 </div>
-                <form class="m-form m-form--state m-form--fit m-form--label-align-right form-user" id="m_form_edit_user" method="POST" action="javascript:void(0)">
+                <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="m_form_create_post"
+                      method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="m-portlet__body">
                         <div class="m-form__content">
-                            <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert" id="m_form_1_msg">
+                            <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert"
+                                 id="m_form_1_msg">
                                 <div class="m-alert__icon">
                                     <i class="la la-warning"></i>
                                 </div>
@@ -111,64 +112,57 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label  el col-lg-3 col-sm-12">Tên hiển thị *</label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input type="text" class="form-control m-input" name="name" value="{{ old('name', $user->name) }}"
-                                       placeholder="Enter username">
-                                <div class="alert alert-danger d-none" id="msg_div">
-                                    <span id="res_message"></span>
-                                </div>
+                            <label class="col-form-label col-lg-2 col-md-2 col-12">Tiêu đề *</label>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input type="text" class="form-control m-input" name="title"
+                                       placeholder="Nhập tiêu đề bài viết....">
+                                <p class="font-weight-bold text-danger">{{ $errors->first('title') }}</p>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label el col-lg-3 col-sm-12">Email *</label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input type="text" class="form-control m-input" name="email"
-                                       placeholder="Enter email" value="{{ old('email', $user->email) }}">
-                                <div class="alert alert-danger d-none" id="msg_div">
-                                    <span id="res_message"></span>
+                            <div class="m-form__group col-lg-4 col-md-6 col-12">
+                                <label class="col-form-label w-25">Ảnh bài viết
+                                    *</label>
+                                <div class="w-50">
+                                    <input type="file" class="form-control m-input" name="avatar"
+                                           placeholder="Chọn ảnh bài viết">
+                                    <p class="font-weight-bold text-danger">{{ $errors->first('avatar') }}</p>
                                 </div>
+                            </div>
+                            <div class="m-form__group col-lg-4 col-md-6 col-12">
+                                <label class="w-50 col-form-label ">Chọn danh mục
+                                    *</label>
+                                <div class="w-50">
+                                    <select name="category_id" id="category_id" class="form-control m-input">
+                                        @foreach($categories as $category)
+                                            <option
+                                                value="{{ $category->id }}" {{ ($category->id ==  old('category_id')) ? 'selected' : '' }}>
+                                                {{($category->id==$category->category_id)?"-":"" }}  {{$category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <p class="font-weight-bold text-danger">{{ $errors->first('category_id') }}</p>
+                                </div>
+                            </div>
+                            <div class="m-form__group col-lg-4 col-md-2 col-sm-12">
+                                <label class="col-form-label w-50">Status *</label>
+                                <div class="w-50">
+                                    <select class="form-control m-input" name="status">
+                                        <option value="">Select</option>
+                                        <option value="{{ config('app.active') }}">Active</option>
+                                        <option value="{{ config('app.block') }}">Disable</option>
+                                    </select>
+                                </div>
+                                <p class="font-weight-bold text-danger">{{ $errors->first('status') }}</p>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label el col-lg-3 col-sm-12">Mật khẩu *</label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input type="password" class="form-control m-input" name="password"
-                                       placeholder="Enter password" value="{{ old('password', $user->password) }}">
-                                <div class="alert alert-danger d-none" id="msg_div">
-                                    <span id="res_message"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <label class="col-form-label el col-lg-3 col-sm-12">Số điện thoại *</label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control m-input" name="phone"
-                                           placeholder="Enter phone" value="{{ old('phone', $user->phone) }}">
-                                    <div class="input-group-append">
-                                        <a href="#" class="btn btn-brand">
-                                            <i class="la la-phone"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <span class="font-weight-bold m-form__help">Please enter your phone number</span>
-                                <div class="alert alert-danger d-none" id="msg_div">
-                                    <span id="res_message"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group m-form__group row">
-                            <label class="col-form-label col-lg-3 col-sm-12">Status *</label>
-                            <div class="col-lg-4 col-md-9 col-sm-12">
-                                <select class="form-control m-input" name="status">
-                                    <option value="">Select</option>
-                                    <option  value="{{ (config('app.active')) }}" {{ (old('status', $user->status) == config('app.active')) ? 'selected' : ''}}>Active</option>
-                                    <option  value="{{ (config('app.block')) }}" {{ (old('status', $user->status) == config('app.block')) ? 'selected' : ''}}>Block</option>
-                                </select>
-                                <span class="font-weight-bold m-form__help">Please select an option.</span>
+                            <label class="col-lg-4 col-sm-12 col-form-label">Nội dung bài viết *</label>
+                            <div class="col-lg-9 col-md-9 col-sm-12 mx-auto">
+                                <textarea class="form-control m-input" name="content"
+                                          id="content">{{ old('content') }}</textarea>
+                                <p class="font-weight-bold text-danger">{{ $errors->first('content') }}</p>
                             </div>
                         </div>
                     </div>
@@ -176,8 +170,9 @@
                         <div class="m-form__actions m-form__actions">
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
-                                    <button id="submit_edit_user" type="submit" class="btn btn-accent">Lưu lại</button>
-                                    <button type="button" onclick="reloadData()" class="btn btn-secondary">Reset</button>
+                                    <button type="submit" class="btn btn-accent">Thêm mới
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
                         </div>
@@ -188,5 +183,5 @@
     </div>
 @endsection
 @section('script')
-    @include('backend.users.updateScript')
+    @include('backend.posts.createScript')
 @endsection

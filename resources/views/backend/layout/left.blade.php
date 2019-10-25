@@ -41,11 +41,19 @@
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="builder.html" class="m-menu__link ">
+                            <a href="{{ route('roles.index') }}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
                                 <span class="m-menu__link-text">Phân quyền</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+                            <a href="{{ route('permissions.index') }}" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">Permission</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
@@ -67,7 +75,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="m-menu__item  m-menu__item---{{ Request::is('admin/posts') ? 'active' : null }}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <li class="m-menu__item  m-menu__item--{{ Request::is('admin/posts') ? 'active' : null }}" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="{{ route('posts.index') }}" class="m-menu__link m-menu__toggle">
                     <span class="m-menu__item-here"></span>
                     <i class="m-menu__link-icon flaticon-book"></i>
@@ -104,17 +112,17 @@
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
+                            <a href="{{ route('posts.create') }}" class="m-menu__link ">
                                 <i class="m-menu__link-icon flaticon-line-graph"></i>
                                 <span class="m-menu__link-text">Thêm bài viết mới</span>
                             </a>
                         </li>
-{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
-{{--                            <a href="inner.html" class="m-menu__link ">--}}
-{{--                                <i class="m-menu__link-icon flaticon-statistics"></i>--}}
-{{--                                <span class="m-menu__link-text">Investments</span>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+                            <a href="{{ route('categories.index') }}" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-statistics"></i>
+                                <span class="m-menu__link-text">Danh mục bài viết</span>
+                            </a>
+                        </li>
 {{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
 {{--                            <a href="inner.html" class="m-menu__link ">--}}
 {{--                                <i class="m-menu__link-icon flaticon-coins"></i>--}}
@@ -233,116 +241,116 @@
                     </ul>
                 </div>
             </li>
-            <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1">
-                <a href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <span class="m-menu__item-here"></span>
-                    <i class="m-menu__link-icon flaticon-share"></i>
-                    <span class="m-menu__link-text">Feedbacks</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-title">
-													<span class="m-menu__link-wrap">
-														<span class="m-menu__link-text">Product Feedbacks</span>
-														<span class="m-menu__link-badge">
-															<span class="m-badge m-badge--accent">3</span>
-														</span>
-													</span>
-												</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Customer Reviews</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Product Ratings</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Customer Support</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1">
-                <a href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <span class="m-menu__item-here"></span>
-                    <i class="m-menu__link-icon flaticon-network"></i>
-                    <span class="m-menu__link-text">Conversions</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu ">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1">
-											<span class="m-menu__link">
-												<span class="m-menu__item-here"></span>
-												<span class="m-menu__link-text">Conversions</span>
-											</span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--line">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Goals</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--line">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-title">
-													<span class="m-menu__link-wrap">
-														<span class="m-menu__link-text">Ecommerce</span>
-														<span class="m-menu__link-badge">
-															<span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">new</span>
-														</span>
-													</span>
-												</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--line">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Transactions</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--line">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Funnels</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+{{--            <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1">--}}
+{{--                <a href="javascript:;" class="m-menu__link m-menu__toggle">--}}
+{{--                    <span class="m-menu__item-here"></span>--}}
+{{--                    <i class="m-menu__link-icon flaticon-share"></i>--}}
+{{--                    <span class="m-menu__link-text">Feedbacks</span>--}}
+{{--                    <i class="m-menu__ver-arrow la la-angle-right"></i>--}}
+{{--                </a>--}}
+{{--                <div class="m-menu__submenu ">--}}
+{{--                    <span class="m-menu__arrow"></span>--}}
+{{--                    <ul class="m-menu__subnav">--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-title">--}}
+{{--													<span class="m-menu__link-wrap">--}}
+{{--														<span class="m-menu__link-text">Product Feedbacks</span>--}}
+{{--														<span class="m-menu__link-badge">--}}
+{{--															<span class="m-badge m-badge--accent">3</span>--}}
+{{--														</span>--}}
+{{--													</span>--}}
+{{--												</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Customer Reviews</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Product Ratings</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Customer Support</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </li>--}}
+{{--            <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1">--}}
+{{--                <a href="javascript:;" class="m-menu__link m-menu__toggle">--}}
+{{--                    <span class="m-menu__item-here"></span>--}}
+{{--                    <i class="m-menu__link-icon flaticon-network"></i>--}}
+{{--                    <span class="m-menu__link-text">Conversions</span>--}}
+{{--                    <i class="m-menu__ver-arrow la la-angle-right"></i>--}}
+{{--                </a>--}}
+{{--                <div class="m-menu__submenu ">--}}
+{{--                    <span class="m-menu__arrow"></span>--}}
+{{--                    <ul class="m-menu__subnav">--}}
+{{--                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--											<span class="m-menu__link">--}}
+{{--												<span class="m-menu__item-here"></span>--}}
+{{--												<span class="m-menu__link-text">Conversions</span>--}}
+{{--											</span>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--line">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Goals</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--line">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-title">--}}
+{{--													<span class="m-menu__link-wrap">--}}
+{{--														<span class="m-menu__link-text">Ecommerce</span>--}}
+{{--														<span class="m-menu__link-badge">--}}
+{{--															<span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">new</span>--}}
+{{--														</span>--}}
+{{--													</span>--}}
+{{--												</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--line">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Transactions</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--line">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Funnels</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </li>--}}
             <li class="m-menu__item m-menu__item--submenu m-menu__item--bottom-2" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-settings"></i>
@@ -450,63 +458,63 @@
                     </ul>
                 </div>
             </li>
-            <li class="m-menu__item m-menu__item--submenu m-menu__item--bottom-1" aria-haspopup="true" m-menu-submenu-toggle="hover">
-                <a href="javascript:;" class="m-menu__link m-menu__toggle">
-                    <i class="m-menu__link-icon flaticon-info"></i>
-                    <span class="m-menu__link-text">Help</span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="m-menu__submenu m-menu__submenu--up">
-                    <span class="m-menu__arrow"></span>
-                    <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent m-menu__item--bottom-1" aria-haspopup="true">
-											<span class="m-menu__link">
-												<span class="m-menu__link-text">Help</span>
-											</span>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Support</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Blog</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Documentation</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Pricing</span>
-                            </a>
-                        </li>
-                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-                            <a href="inner.html" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">Terms</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+{{--            <li class="m-menu__item m-menu__item--submenu m-menu__item--bottom-1" aria-haspopup="true" m-menu-submenu-toggle="hover">--}}
+{{--                <a href="javascript:;" class="m-menu__link m-menu__toggle">--}}
+{{--                    <i class="m-menu__link-icon flaticon-info"></i>--}}
+{{--                    <span class="m-menu__link-text">Help</span>--}}
+{{--                    <i class="m-menu__ver-arrow la la-angle-right"></i>--}}
+{{--                </a>--}}
+{{--                <div class="m-menu__submenu m-menu__submenu--up">--}}
+{{--                    <span class="m-menu__arrow"></span>--}}
+{{--                    <ul class="m-menu__subnav">--}}
+{{--                        <li class="m-menu__item  m-menu__item--parent m-menu__item--bottom-1" aria-haspopup="true">--}}
+{{--											<span class="m-menu__link">--}}
+{{--												<span class="m-menu__link-text">Help</span>--}}
+{{--											</span>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Support</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Blog</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Documentation</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Pricing</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">--}}
+{{--                            <a href="inner.html" class="m-menu__link ">--}}
+{{--                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">--}}
+{{--                                    <span></span>--}}
+{{--                                </i>--}}
+{{--                                <span class="m-menu__link-text">Terms</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </li>--}}
         </ul>
     </div>
 

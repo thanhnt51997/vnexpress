@@ -1,0 +1,8 @@
+.dataTables_wrapper .pagination .page-item > .page-link {
+    border: 1px solid #ccc;
+    padding: 8px 14px;
+}
+
+.pagination {
+    justify-content: center;
+}

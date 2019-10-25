@@ -19,7 +19,7 @@
                     data: {id: id},
                     success: function (response) {
                         console.log(response.message);
-                        if (response.status = 0) {
+                        if (response.status == 0) {
                             toastr.error(response.message);
                         } else {
                             toastr.success(response.message);
@@ -32,5 +32,29 @@
                 })
             }
         });
+    });
+
+
+    $(function () {
+        $('body').on('click', '.pagination a', function (e) {
+            e.preventDefault();
+
+            $('#data_table_users a').css('color', '#dfecf6');
+            $('#data_table_users').append('<img style="background-repeat: no-repeat; position: absolute; width: 100px; left: 50%; top: 50%; z-index: 100000;" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />');
+
+            var url = $(this).attr('href');
+            getPosts(url);
+            window.history.pushState("", "", url);
+        });
+
+        function getPosts(url) {
+            $.ajax({
+                url: url
+            }).done(function (data) {
+                $('.data-table-users').html(data);
+            }).fail(function () {
+                alert('Posts could not be loaded.');
+            });
+        }
     });
 </script>
