@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth','admin']], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'DashboardController@index')->name('admin');
     Route::group(['prefix' => 'users', 'middleware' => 'admin'], function () {
         Route::get('/', 'UserController@index')->name('users.index');
@@ -76,10 +76,15 @@ Route::group(['namespace' => 'Frontend', 'prefix' => '/'], function () {
     Route::post('/register', 'RegistrationController@store')->name('frontend.register');
     Route::get('/logout', 'RegistrationController@logout')->name('frontend.logout');
     Route::get('/modal_login', 'LoginController@getLogin')->name('frontend.getLogin');
-    Route::post('/login', 'LoginController@login')->name('frontend.login');
+    Route::post('/loginUser', 'LoginController@login')->name('frontend.login');
 
 
     Route::get('/{category}/{slug}','FrontendController@postView')->name('post.view');
+
+    Route::post('comment','CommentController@postComment')->name('frontend.comment.post');
+    Route::get('/modal_delete_comment', 'CommentController@getDeleteModal')->name('frontend.comment.getDeleteModal');
+    Route::post('comment/delete', 'CommentController@destroy')->name('frontend.comment.destroy');
+
 });
 
 

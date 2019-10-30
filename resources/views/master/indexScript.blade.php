@@ -112,7 +112,7 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_login_user').modal('hide');
-                    location.replace("{{ route('frontend') }}");
+                    location.reload(true);
                 } else {
                     toastr.error(response.message);
                 }
@@ -122,4 +122,5 @@
             }
         });
     }
+
 </script>
