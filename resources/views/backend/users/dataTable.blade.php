@@ -26,6 +26,10 @@
                         aria-label="Phone: activate to sort column ascending">Số điện thoại
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="m_table_2" rowspan="1"
+                        colspan="1" style="width: 139.25px;"
+                        aria-label="Phone: activate to sort column ascending">Vai trò
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="m_table_2" rowspan="1"
                         colspan="1" style="width: 174.25px;"
                         aria-label="Status: activate to sort column ascending">Trạng thái
                     </th>
@@ -47,8 +51,10 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
+                        <td>@foreach($user->roles as $role) {{$role->display_name}} @endforeach</td>
                         <td>
-                            <span class="m-badge {{($user->status == config('app.active')) ? 'm-badge--primary' : ' m-badge--warning' }} m-badge--wide">{{($user->status == config('app.active')) ? 'Active' : 'Disable' }}</span>
+                            <span
+                                class="m-badge {{($user->status == config('app.active')) ? 'm-badge--primary' : ' m-badge--warning' }} m-badge--wide">{{($user->status == config('app.active')) ? 'Active' : 'Disable' }}</span>
                         </td>
                         <td nowrap="">
                             <a href="{{ route('users.edit', ['id' => $user->id]) }}"

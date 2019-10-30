@@ -34,6 +34,14 @@
                             <span id="res_message"></span>
                         </div>
                     </div>
+                    <div class="form-group m-form__group">
+                        <label for="recipient-name" class="form-control-label">Slug *</label>
+                        <input type="text" class="form-control m-input" name="slug"
+                               placeholder="Nhập slug cho danh mục...." value="{{ old('slug', $category->slug) }}">
+                        <div class="alert alert-danger d-none" id="msg_div">
+                            <span id="res_message"></span>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-4 col-md-4 col-12 m-form__group">
                             <label for="recipient-name" class="col-form-label col-sm-12">Status *</label>

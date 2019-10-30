@@ -52,9 +52,9 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    @if (count($roles) > 0)
+                    @if (count($categories) > 0)
                         <section class="data-table-posts">
-                            @include('backend.roles.dataTable')
+                            @include('backend.categories.dataTable')
                         </section>
                     @endif
                 </div>
@@ -66,5 +66,5 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
-    @include('backend.roles.indexScript');
+    @include('backend.categories.indexScript');
 @endsection

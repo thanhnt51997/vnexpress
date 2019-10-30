@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     protected $table  = 'categories';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'slug'];
 
     use SoftDeletes;
 
@@ -20,6 +20,17 @@ class Category extends Model
     protected $dates = ['deleted_at'];
 
     public function posts(){
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'category_id', 'id');
     }
+
+    public function latestPost()
+    {
+        return $this->hasOne(Post::class)->latest();
+    }
+
+    public function latest_posts()
+    {
+        return $this->hasMany(Post::class)->latest()->limit(3);
+    }
+
 }

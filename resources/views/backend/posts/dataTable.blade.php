@@ -44,7 +44,7 @@
                         style="width: 133px;">{{ $post->title }}</span>
                 </td>
                 <td data-field="content" class="m-datatable__cell "><span class="content"
-                                                                          style="width: 203px;">{!! substr($post->content, 0, 100) !!}</span>
+                                                                          style="width: 203px;">{!! substr($post->content, 0, 200) !!}</span>
                 </td>
                 <td data-field="avatar" class="m-datatable__cell text-center"><img class="img-fluid"
                                                                                    width="150px"
@@ -62,19 +62,21 @@
                         style="width: 50px;">{{($post->status == config('app.active')) ? 'Active' : 'Disable' }}</span>
                 </td>
                 <td nowrap="">
-                    <a class="btn btn-warning" data-toggle="modal"
-                       data-target="" onclick="showEditModal({{ $post->id }})"
-                       href="javascript:;"><i
-                            class="la la-edit"></i>
-                    </a>
                     <a href="javascript:;" class="btn btn-info"><i class="la la-eye"></i></a>
-                    <a class="btn btn-danger m-portlet__nav-link delete-post"
-                       onclick="deletePost()"
-                       href="javascript:;"
-                       post-id="{{ $post->id }}"
-                       title="Delete">
-                        <i class="la la-trash"></i>
-                    </a>
+                    @if($user_id == $post->user_id || $isAdmin)
+                        <a class="btn btn-warning" data-toggle="modal"
+                           data-target="" onclick="showEditModal({{ $post->id }})"
+                           href="javascript:;"><i
+                                class="la la-edit"></i>
+                        </a>
+                        <a class="btn btn-danger m-portlet__nav-link delete-post"
+                           onclick="deletePost()"
+                           href="javascript:;"
+                           post-id="{{ $post->id }}"
+                           title="Delete">
+                            <i class="la la-trash"></i>
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

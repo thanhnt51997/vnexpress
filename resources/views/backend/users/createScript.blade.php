@@ -6,6 +6,7 @@
                     email: {required: !0, email: !0, minlength: 10},
                     url: {required: !0},
                     name: {required: !0},
+                    role_id: {required: !0},
                     password: {required: !0},
                     status: {required: !0},
                     phone: {required: !0, number: !0, maxlength: 11},

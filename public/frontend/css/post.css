@@ -1,0 +1,35 @@
+.description p {
+    font-weight: 500;
+    font-size: 18px !important;
+}
+
+.content-post .content-text {
+    line-height: 1.75;
+    font-size: 14px !important;
+}
+
+.box_infographics {
+    border-top: 2px solid #d6d6d6;
+}
+
+.box_infographics .header_toppic {
+    margin-bottom: 5px;
+}
+
+.box_infographics ul li {
+    list-style: disc;
+}
+
+.clearfix:after, .clearfix:after {
+    content: '';
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+.box-comment .header-comment {
+    background: #eaeaea;
+    text-rendering: geometricPrecision;
+    padding: 0 0 0 10px;
+    color: #9F224E;
+}

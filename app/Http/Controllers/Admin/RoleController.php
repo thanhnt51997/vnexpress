@@ -27,9 +27,10 @@ class RoleController extends Controller
 
     public function getCreateModal()
     {
+        $list_permission = $this->getPermissionList();
         return Response()->json([
             'status' => 1,
-            'modal_html' => view('backend.roles.create')->render()
+            'modal_html' => view('backend.roles.create', compact('list_permission'))->render()
         ]);
     }
 
@@ -39,11 +40,11 @@ class RoleController extends Controller
         if (empty($input['name'])) {
             $message = 'Vui lòng nhập tên quyền hạn';
         }
-        if (!isset($input['status'])) {
-            $message = 'Vui lòng chọn status';
-        }
         if (!isset($input['display_name'])) {
             $message = 'Vui lòng nhập dữ liệu';
+        }
+        if (empty($input['permissions'])) {
+            $message = 'Vui lòng choasdasd';
         }
         $nameCreate = Role::where('name', $input['name'])->first();
         if (!empty($nameCreate)) {
@@ -61,6 +62,13 @@ class RoleController extends Controller
                 'message' => $validation
             ]);
         }
+
+        $permissions = $this->getPermissionList();
+        $permission_arr = [];
+        foreach (array_keys($permissions) as $permission) {
+            $permission_arr[$permission] = in_array($permission, $input['permissions']) ? true : false;
+        }
+        $input['permissions'] = json_encode($permission_arr);
         Role::create($input);
         return Response()->json([
             'status' => 1,
@@ -71,15 +79,23 @@ class RoleController extends Controller
     public function getEditModal($id)
     {
         $role = Role::find($id);
+        $oldPermission = json_decode($role->permissions, true);
+        $checked = array_filter($oldPermission,function ($value){
+            return $value == 'true';
+        });
+        $check_permisson_arr = array_keys($checked);
+        $list_permission = $this->getPermissionList();
+
         if (empty($role)) {
             return Response()->json([
                 'status' => 0,
                 'message' => 'Quyền hạn không tồn tại'
             ]);
         }
+
         return Response()->json([
             'status' => 1,
-            'modal_html' => view('backend.roles.edit', compact('role'))->render()
+            'modal_html' => view('backend.roles.edit', compact('role','list_permission', 'check_permisson_arr'))->render()
         ]);
     }
 
@@ -110,6 +126,12 @@ class RoleController extends Controller
                 'message' => $validation
             ]);
         }
+        $permissions = $this->getPermissionList();
+        $permission_arr = [];
+        foreach (array_keys($permissions) as $permission) {
+            $permission_arr[$permission] = in_array($permission, $input['permissions']) ? true : false;
+        }
+        $input['permissions'] = json_encode($permission_arr);
         $role->update($input);
         return Response()->json([
             'status' => 1,
@@ -131,5 +153,16 @@ class RoleController extends Controller
             'status' => 1,
             'message' => 'Xóa danh mục thành công!'
         ]);
+    }
+
+    public function getPermissionList()
+    {
+        return [
+            'user'=> 'Quản lý người dùng',
+            'post.create' => 'Viết bài',
+            'post.update' => 'Sửa bài viết',
+            'post.delete' => 'Xóa bài viết',
+            'post.view' => 'Xem bài viết',
+        ];
     }
 }

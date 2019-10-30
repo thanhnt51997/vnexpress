@@ -39,6 +39,9 @@ class CategoryController extends Controller
         if (empty($input['name'])) {
             $message = 'Vui lòng nhập tên danh mục';
         }
+        if (empty($input['slug'])) {
+            $message = 'Vui lòng nhập slug';
+        }
         if (!isset($input['status'])) {
             $message = 'Vui lòng chọn status';
         }
@@ -83,6 +86,10 @@ class CategoryController extends Controller
         $name = Category::where('name', $input['name'])->where('id', '<>',$id)->first();
         if (!empty($name)) {
             $message = 'Danh mục đã tồn tại! Vui lòng kiểm tra lại';
+        }
+        $slug = Category::where('name', $input['slug'])->where('id', '<>',$id)->first();
+        if (!empty($slug)) {
+            $message = 'Slug của danh mục đã tồn tại! Vui lòng kiểm tra lại';
         }
         return $message;
     }

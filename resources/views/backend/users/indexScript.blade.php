@@ -23,7 +23,6 @@
                             toastr.error(response.message);
                         } else {
                             toastr.success(response.message);
-                            location.replace("{{ route('users.index') }}");
                         }
                     },
                     error: function (response) {

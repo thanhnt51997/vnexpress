@@ -26,61 +26,6 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <div
-                        class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                        m-dropdown-toggle="hover" aria-expanded="true">
-                        <a href="#"
-                           class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                            <i class="la la-plus m--hide"></i>
-                            <i class="la la-ellipsis-h"></i>
-                        </a>
-                        <div class="m-dropdown__wrapper">
-                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                            <div class="m-dropdown__inner">
-                                <div class="m-dropdown__body">
-                                    <div class="m-dropdown__content">
-                                        <ul class="m-nav">
-                                            <li class="m-nav__section m-nav__section--first m--hide">
-                                                <span class="m-nav__section-text">Quick Actions</span>
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <i class="m-nav__link-icon flaticon-share"></i>
-                                                    <span class="m-nav__link-text">Activity</span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                    <span class="m-nav__link-text">Messages</span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <i class="m-nav__link-icon flaticon-info"></i>
-                                                    <span class="m-nav__link-text">FAQ</span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="" class="m-nav__link">
-                                                    <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                    <span class="m-nav__link-text">Support</span>
-                                                </a>
-                                            </li>
-                                            <li class="m-nav__separator m-nav__separator--fit">
-                                            </li>
-                                            <li class="m-nav__item">
-                                                <a href="#"
-                                                   class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Submit</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="m-content">
@@ -154,10 +99,27 @@
                                         </a>
                                     </div>
                                 </div>
-                                <span class="font-weight-bold m-form__help">Please enter your phone number</span>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label el col-lg-3 col-sm-12">Quyền hạn *</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select name="role_id" id="role_id" class="form-control m-input">
+                                    <option value="">Select</option>
+                                    @foreach ($roles as $role_item)
+                                        <option
+                                            value="{{ $role_item->id }}" @foreach($user->roles as $role)  {{ ($role_item->id == $role->id) ? 'selected' : '' }} @endforeach>
+                                            {{ $role_item->display_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <p class="text-danger">{{ $errors->first('department_id')}}</p>
+                            <div class="alert alert-danger d-none" id="msg_div">
+                                <span id="res_message"></span>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
@@ -168,7 +130,6 @@
                                     <option  value="{{ (config('app.active')) }}" {{ (old('status', $user->status) == config('app.active')) ? 'selected' : ''}}>Active</option>
                                     <option  value="{{ (config('app.block')) }}" {{ (old('status', $user->status) == config('app.block')) ? 'selected' : ''}}>Block</option>
                                 </select>
-                                <span class="font-weight-bold m-form__help">Please select an option.</span>
                             </div>
                         </div>
                     </div>

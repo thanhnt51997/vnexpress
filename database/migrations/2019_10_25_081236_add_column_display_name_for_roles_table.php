@@ -16,7 +16,14 @@ class AddColumnDisplayNameForRolesTable extends Migration
         Schema::table('roles', function (Blueprint $table) {
             $table->string('display_name')->nullable();
         });
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+            $table->unique(['role_id','user_id']);
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -28,5 +35,6 @@ class AddColumnDisplayNameForRolesTable extends Migration
         Schema::table('roles', function (Blueprint $table) {
             $table->dropColumn('display_name');
         });
+        Schema::dropIfExists('role_user');
     }
 }

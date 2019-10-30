@@ -52,6 +52,9 @@
                 }
             },
             error: function (response) {
+                if(response.status == 403) {
+                    toastr.error('Bạn không thể sửa bài viết này!');
+                }
             }
         });
     }
@@ -112,7 +115,6 @@
                     type: 'POST',
                     data: {id: id},
                     success: function (response) {
-                        console.log(response.message);
                         if (response.status == 0) {
                             toastr.error(response.message);
                         } else {

@@ -33,6 +33,7 @@
         $("#m_form_create_category").validate({
             rules: {
                 name: {required: !0},
+                slug: {required: !0},
                 status: {required: !0},
             }, invalidHandler: function (e, r) {
                 $("#m_form_1_msg").removeClass("m--hide").show(), mUtil.scrollTop()
@@ -89,6 +90,7 @@
         $("#m_form_edit_category").validate({
             rules: {
                 name: {required: !0},
+                slug: {required: !0},
                 status: {required: !0},
             }, invalidHandler: function (e, r) {
                 $("#m_form_1_msg").removeClass("m--hide").show(), mUtil.scrollTop()

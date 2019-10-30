@@ -26,44 +26,55 @@
                         </div>
                     </div>
                     <input type="hidden" name="role_id" id="role_id" value="{{ $role->id }}">
-                    <div class="form-group m-form__group">
-                        <label for="recipient-name" class="form-control-label">Tên quyền hạn *</label>
-                        <input type="text" class="form-control m-input" name="name"
-                               placeholder="Nhập quyền hạn...." value="{{ old('name', $role->name) }}">
-                        <div class="alert alert-danger d-none" id="msg_div">
-                            <span id="res_message"></span>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label  el col-lg-3 col-sm-12">Tên quyền hạn *</label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <input type="text" class="form-control m-input" name="name"
+                                   placeholder="Nhập tên quyền hạn..." value="{{ old('name', $role->name) }}">
+                            <p class="font-weight-bold text-danger">{{ $errors->first('name') }}</p>
+                            <div class="alert alert-danger d-none" id="msg_div">
+                                <span id="res_message"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
                         <label class="col-form-label  el col-lg-3 col-sm-12">Vai trò *</label>
                         <div class="col-lg-4 col-md-9 col-sm-12">
                             <input type="text" class="form-control m-input" name="display_name"
-                                   placeholder="Nhập dữ liệu...." value="{{ old('display_name', $role->display_name) }}">
+                                   placeholder="Nhập dữ liệu...."
+                                   value="{{ old('display_name', $role->display_name) }}">
                             <p class="font-weight-bold text-danger">{{ $errors->first('display_name') }}</p>
                             <div class="alert alert-danger d-none" id="msg_div">
                                 <span id="res_message"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-4 col-md-4 col-12 m-form__group">
-                            <label for="recipient-name" class="col-form-label col-sm-12">Status *</label>
-                            <div class="col-12">
-                                <select class="form-control m-input" name="status">
-                                    <option value="">Select</option>
-                                    <option
-                                        value="{{ (config('app.active')) }}" {{ (old('status', $role->status) == config('app.active')) ? 'selected' : ''}}>
-                                        Active
-                                    </option>
-                                    <option
-                                        value="{{ config('app.block') }}" {{ (old('status', $role->status) == config('app.block')) ? 'selected' : ''}}>
-                                        Disable
-                                    </option>
-                                </select>
-                                <div class="alert alert-danger d-none" id="msg_div">
-                                    <span id="res_message"></span>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label  el col-lg-3 col-sm-12">Slug *</label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <input type="text" class="form-control m-input" name="slug"
+                                   placeholder="Nhập dữ liệu...." value="{{ old('slug', $role->slug) }}">
+                            <p class="font-weight-bold text-danger">{{ $errors->first('slug') }}</p>
+                            <div class="alert alert-danger d-none" id="msg_div">
+                                <span id="res_message"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">Permissions *</label>
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <div class="checkbox">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-12">
+                                        @foreach($list_permission as $key => $permission)
+                                                <label class="col-form-label">
+                                                    <input type="checkbox" name="permissions[]" value="{{ $key }}" {{  in_array($key, $check_permisson_arr) ?  'checked' : ''  }}> {{$permission}}
+                                                </label>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
+                            <p class="font-weight-bold text-danger">{{ $errors->first('status') }}</p>
                         </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__foot--fit">

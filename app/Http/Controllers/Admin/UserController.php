@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Role;
 use App\Model\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     protected $user;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +23,12 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->authorize('admin');
+//        $this->authorize('admin');
     }
 
     public function index(Request $request)
     {
-        $users = $this->user->paginate(config('app.paginate'));
-//        dd($users);
+        $users = $this->user->with('roles')->paginate(config('app.paginate'));
         if ($request->ajax()) {
             return view('backend.users.dataTable', ['users' => $users])->render();
         }
@@ -42,7 +43,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        $roles = Role::all();
+        return view('backend.users.create', compact('roles'));
     }
 
     /**
@@ -54,14 +56,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request['password'] = Hash::make($request->password);
-        $data = $request->all();
+        $data = $request->except(['role_id']);
         $validation = $this->validateData($data);
         if (!empty($validation)) {
             return Response()->json([
                 'message' => $validation
             ]);
         }
-        User::create($data);
+        $user = User::create($data);
+        $user->roles()->attach($request->role_id);
         return Response()->json([
             'status' => 1,
             'message' => 'Tạo user thành công!'
@@ -121,9 +124,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('roles')->findOrFail($id);
+        $roles = Role::all();
         $data = [
             'user' => $user,
+            'roles' => $roles,
         ];
         return view('backend.users.edit', $data);
     }
@@ -142,14 +147,18 @@ class UserController extends Controller
             $error = 'Người dùng không tồn tại!';
             return $error;
         }
-        $request['password'] = Hash::make($request->password);
-        $input = $request->all();
+        $input = $request->except('password');
+        if ($request->has('password')) {
+            $request['password'] = Hash::make($request->password);
+        }
+
         $validation = $this->validateUpdate($user_info, $input);
         if (!empty($validation)) {
             return Response()->json([
                 'message' => $validation
             ]);
         }
+        User::with('roles')->find($id)->roles()->sync($request->role_id);
         $user_info->update($input);
         return Response()->json([
             'status' => 1,
@@ -157,7 +166,7 @@ class UserController extends Controller
         ]);
     }
 
-        public function validateUpdate($user_info, $input)
+    public function validateUpdate($user_info, $input)
     {
         $message = null;
         $this->validateData($input);
@@ -194,6 +203,7 @@ class UserController extends Controller
             ]);
         }
         $user->delete();
+        $user->roles()->detach();
         return Response()->json([
             'status' => 1,
             'message' => 'Xóa user thành công!'

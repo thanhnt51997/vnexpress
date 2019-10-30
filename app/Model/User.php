@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'phone',
+        'name', 'email', 'password', 'status', 'phone'
     ];
 
     /**
@@ -53,18 +53,49 @@ class User extends Authenticatable
          * in your database, you could do:
          */
 
-        return $this->role()->where('name', 'admin')->exists();
+        return $this->roles()->where('name', 'admin')->exists();
     }
 
-        protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function superAdmin()
+    {
+
+        foreach ($this->roles as $role) {
+            $permission_arr = json_decode($role->permissions, true);
+            $admin = array_key_exists('user', $permission_arr);
+                if ($admin && $permission_arr['user']) {
+                    return true;
+                }
+        }
+        return false;
+    }
+
+    public function hasAccess(array $permissions): bool
+    {
+        foreach ($this->roles as $role) {
+            if ($role->hasAccess($permissions)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the user belongs to role.
+     */
+    public function inRole(string $roleSlug)
+    {
+        return $this->roles()->where('slug', $roleSlug)->count() == 1;
     }
 }

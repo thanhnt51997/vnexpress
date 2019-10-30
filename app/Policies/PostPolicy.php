@@ -6,80 +6,55 @@ use App\Model\User;
 use App\Model\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+
 class PostPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any posts.
-     *
-     * @param  \App\Model\User  $user
-     * @return mixed
-     */
-    public function before($user, $ability)
+    public function view(User $user,  $id)
     {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
+        $post = Post::findOrFail($id);
+        return $user->hasAccess(['post.update']) or $user->id == $post->user_id;
     }
 
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the post.
-     *
-     * @param  \App\Model\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function view(User $user, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create posts.
-     *
-     * @param  \App\Model\User  $user
-     * @return mixed
-     */
     public function create(User $user)
     {
-        //
+        return $user->hasAccess(['post.create']);
     }
 
-    /**
-     * Determine whether the user can update the post.
-     *
-     * @param  \App\Model\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function update(User $user, Post $post)
+    public function edit(User $user, $id)
     {
-        return $user->id === $post->user_id;
+        $post = Post::findOrFail($id);
+        return $user->hasAccess(['post.update']) and $user->id == $post->user_id;
     }
 
-    /**
-     * Determine whether the user can delete the post.
-     *
-     * @param  \App\Model\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function delete(User $user, Post $post)
+    public function update(User $user, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return $user->hasAccess(['post.update']) and $user->id == $post->user_id;
     }
+
+    public function delete(User $user, $id)
+    {
+        $post = Post::findOrFail($id);
+        return $user->hasAccess(['post.delete']) or $user->id == $post->user_id;
+    }
+
+//    public function publish(User $user)
+//    {
+//        return $user->hasAccess(['post.publish']);
+//    }
+//
+//    public function draft(User $user)
+//    {
+//        return $user->inRole('editor');
+//    }
 
     /**
      * Determine whether the user can restore the post.
      *
-     * @param  \App\Model\User  $user
-     * @param  \App\Post  $post
+     * @param \App\Model\User $user
+     * @param \App\Post $post
      * @return mixed
      */
     public function restore(User $user, Post $post)
@@ -90,12 +65,22 @@ class PostPolicy
     /**
      * Determine whether the user can permanently delete the post.
      *
-     * @param  \App\Model\User  $user
-     * @param  \App\Post  $post
+     * @param \App\Model\User $user
+     * @param \App\Post $post
      * @return mixed
      */
     public function forceDelete(User $user, Post $post)
     {
         //
     }
+
+//    public function publish(User $user)
+//    {
+//        return $user->hasAccess(['post.publish']);
+//    }
+
+//    public function draft(User $user)
+//    {
+//        return $user->inRole('editor');
+//    }
 }

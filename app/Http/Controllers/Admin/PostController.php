@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Post\CreatePostRequest;
 use App\Model\Category;
 use App\Model\Post;
+use App\Model\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,11 +23,12 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = $this->post->with('category','user')->latest('created_at')->paginate(config('app.paginate'));
+        $isAdmin = Auth::user()->superAdmin();
+        $user_id = Auth::user()->id;
         if ($request->ajax()) {
-            return view('backend.posts.dataTable', ['posts' => $posts])->render();
+            return view('backend.posts.dataTable', ['posts' => $posts, 'user_id' => $user_id, 'isAdmin' =>$isAdmin])->render();
         }
-
-        return view('backend.posts.index', compact('posts'));
+        return view('backend.posts.index', compact('posts', 'user_id', 'isAdmin'));
     }
 
     public function create()
@@ -69,7 +71,7 @@ class PostController extends Controller
 
     public function getEditModal($id)
     {
-        $post = Post::with('category')->find($id);
+        $post = Post::with('category')->findOrFail($id);
         $categories = Category::all();
         if (empty($post)) {
             return Response()->json([
@@ -86,7 +88,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        $input = $request->except('content');
+        $input = $request->except('content', 'avatar');
         $input['content'] = $input['content_edit'];
         if ($request->hasFile('avatar')) {
             $storagePath = $request->avatar->store('avatar', ['disk' => 'public']);

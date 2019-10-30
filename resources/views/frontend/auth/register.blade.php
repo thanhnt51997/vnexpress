@@ -1,16 +1,16 @@
-<div class="modal fade" id="modal_create_role" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modal_register_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thêm mới quyền hạn</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tạo tài khoản</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="m-form m-form--state m-form--fit m-form--label-align-right form-role"
-                      id="m_form_create_role" method="POST" action="javascript:void(0)">
+                <form class="m-form m-form--state m-form--fit m-form--label-align-right form-register"
+                      id="m_form_register" method="POST" action="javascript:void(0)">
                     @csrf
                     <div class="m-portlet__body">
                         <div class="m-form__content">
@@ -29,10 +29,10 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label  el col-lg-3 col-sm-12">Tên quyền hạn *</label>
+                            <label class="col-form-label  el col-lg-3 col-sm-12">Tên tài khoản *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <input type="text" class="form-control m-input" name="name"
-                                       placeholder="Nhập tên quyền hạn...">
+                                       placeholder="Nhập tên tài khoản...">
                                 <p class="font-weight-bold text-danger">{{ $errors->first('name') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
@@ -40,43 +40,44 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label  el col-lg-3 col-sm-12">Vai trò *</label>
+                            <label class="col-form-label  el col-lg-3 col-sm-12">Email *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input type="text" class="form-control m-input" name="display_name"
-                                       placeholder="Nhập dữ liệu....">
-                                <p class="font-weight-bold text-danger">{{ $errors->first('display_name') }}</p>
+                                <input type="text" class="form-control m-input" name="email"
+                                       placeholder="Nhập email của bạn...">
+                                <p class="font-weight-bold text-danger">{{ $errors->first('email') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label  el col-lg-3 col-sm-12">Slug *</label>
+                            <label class="col-form-label  el col-lg-3 col-sm-12">Số điện thoại *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input type="text" class="form-control m-input" name="slug"
-                                       placeholder="Nhập dữ liệu....">
-                                <p class="font-weight-bold text-danger">{{ $errors->first('slug') }}</p>
+                                <input type="text" class="form-control m-input" name="phone"
+                                       placeholder="Nhập số điện thoại của bạn...">
+                                <p class="font-weight-bold text-danger">{{ $errors->first('phone') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label class="col-form-label col-lg-3 col-sm-12">Permissions *</label>
-                            <div class="col-lg-6 col-md-9 col-sm-12">
-                                <div class="checkbox">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            @foreach($list_permission as $key => $permission)
-                                                <label class="col-form-label"><input type="checkbox"
-                                                                                     name="permissions[]"
-                                                                                     value="{{ $key }}"> {{$permission}}
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                            <label class="col-form-label  el col-lg-3 col-sm-12">Mật khẩu *</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input placeholder="Nhập mật khẩu..." id="password" type="password" class="m-input form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <p class="font-weight-bold text-danger">{{ $errors->first('password') }}</p>
+                                <div class="alert alert-danger d-none" id="msg_div">
+                                    <span id="res_message"></span>
                                 </div>
-                                <p class="font-weight-bold text-danger">{{ $errors->first('status') }}</p>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label  el col-lg-3 col-sm-12">Nhập lại mật khẩu *</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input id="password-confirm" type="password" class="form-control" placeholder="Xác nhận mật khẩu..." name="confirmpassword" required autocomplete="new-password">
+                                <div class="alert alert-danger d-none" id="msg_div">
+                                    <span id="res_message"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,9 +85,8 @@
                         <div class="m-form__actions m-form__actions">
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
-                                    <button id="submit_create_role" type="submit" class="btn btn-accent">Thêm mới
+                                    <button type="submit" class="btn btn-primary">Đăng ký
                                     </button>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
                         </div>
