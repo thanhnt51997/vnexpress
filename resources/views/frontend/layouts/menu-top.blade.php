@@ -17,18 +17,18 @@
                             <div class="col-lg-12 col-md-6">
                                 <ul class="navbar-nav mr-auto d-flex justify-content-between font-weight-bold">
                                     <li class="nav-item border-right">
-                                        <a class="nav-link" href="#">Trang chủ <span
+                                        <a class="nav-link link-menu" href="{{ route('frontend') }}">Trang chủ <span
                                                 class="sr-only">(current)</span></a>
                                     </li>
                                     @foreach($category_desktop as $desktop)
                                         <li class="nav-item border-right">
-                                            <a class="nav-link"
+                                            <a class="nav-link link-menu"
                                                href="{{ url('category',['slug'=>$desktop->slug]) }}">{{ $desktop->name }}</a>
                                         </li>
                                     @endforeach
                                     @foreach($category_mobile as $mobile)
                                         <li class="nav-item border-right d-desktop">
-                                            <a class="nav-link"
+                                            <a class="nav-link link-menu"
                                                href="{{ url('category',['slug'=>$mobile->slug]) }}">{{ $mobile->name }}</a>
                                         </li>
                                     @endforeach
@@ -37,18 +37,18 @@
                             <div class="col-md-6 d-mobile">
                                 <ul class="navbar-nav mr-auto d-flex justify-content-between">
                                     <li class="nav-item border-right d-desktop">
-                                        <a class="nav-link" href="#">Trang chủ <span
+                                        <a class="nav-link link-menu" href="#">Trang chủ <span
                                                 class="sr-only">(current)</span></a>
                                     </li>
                                     @foreach($category_mobile as $mobile)
                                         <li class="nav-item border-right d-desktop">
-                                            <a class="nav-link"
+                                            <a class="nav-link link-menu"
                                                href="{{ url('category',['slug'=>$mobile->slug]) }}">{{ $mobile->name }}</a>
                                         </li>
                                     @endforeach
                                     @foreach($category_desktop as $desktop)
                                         <li class="nav-item border-right">
-                                            <a class="nav-link"
+                                            <a class="nav-link link-menu"
                                                href="{{ url('category',['slug'=>$desktop->slug]) }}">{{ $desktop->name }}</a>
                                         </li>
                                     @endforeach

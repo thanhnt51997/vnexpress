@@ -11,6 +11,7 @@
                     <span class="time left">{{ $post->created_at }}</span>
                     <h1 class="title-news">{{ $post->title }}
                     </h1>
+                    <i>Lượt xem: {{ $post->view }}</i>
                     <div class="description"><p>{!!   substr( $post->content,0,300) !!}
                         </p></div>
                 </header>
@@ -41,6 +42,7 @@
                 </div>
                 @include('frontend.pages.inputComent')
                 <div id="delete_cmt"></div>
+                <div id="edit_comment"></div>
             </div>
         </div>
     </section>

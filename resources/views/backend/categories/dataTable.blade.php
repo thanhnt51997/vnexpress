@@ -36,7 +36,7 @@
                             <a href="javascript:;"
                                category-id="{{ $category->id }}"
                                category-name="{{ $category->name }}"
-                               onclick="deleteCategory()"
+                               onclick="showDeleteCategoryModal({{ $category->id }})"
                                class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill delete-category"
                                title="Delete">
                                 <i class="la la-trash"></i>
@@ -45,6 +45,7 @@
                     </tr>
                 @endforeach
             </table>
+            {!! $categories->render() !!}
         </div>
     </div>
 </div>

@@ -144,7 +144,7 @@
                                 <div class="col-lg-9 ml-lg-auto">
                                     <button id="submit_create_user" type="submit" class="btn btn-accent">Thêm mới
                                     </button>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
                                 </div>
                             </div>
                         </div>

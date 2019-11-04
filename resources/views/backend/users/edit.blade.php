@@ -138,7 +138,7 @@
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
                                     <button id="submit_edit_user" type="submit" class="btn btn-accent">Lưu lại</button>
-                                    <button type="button" onclick="reloadData()" class="btn btn-secondary">Reset</button>
+                                    <button type="button" onclick="reloadData()" class="btn btn-warning">Reset</button>
                                 </div>
                             </div>
                         </div>

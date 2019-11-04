@@ -18,4 +18,15 @@ function convert_vi_to_en($str) {
     return $str;
 }
 
+function getShortenSentence($string, $limit_number = 18) {
+    $string_arr = explode(' ', $string);
+    if (count($string_arr) > $limit_number) {
+        $new_string_arr = array_slice($string_arr, 0, $limit_number);
+        $shorten_string = implode(" ", $new_string_arr) . ' ...';
+    }
+    else {
+        $shorten_string = $string;
+    }
+    return $shorten_string;
+}
 ?>

@@ -82,7 +82,7 @@
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
                                     <button id="submit_edit_role" type="submit" class="btn btn-accent">Lưu lại</button>
-                                    <button type="button" onclick="reloadData()" class="btn btn-info">Reset</button>
+                                    <button type="button" onclick="reloadData()" class="btn btn-default">Reset</button>
                                 </div>
                             </div>
                         </div>

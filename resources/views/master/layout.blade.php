@@ -30,7 +30,9 @@
           type="text/css"/>
     <link href="{{ asset('assets/vendors/base/vendors.bundle.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/demo/demo3/base/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
-    @yield('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+
+@yield('style')
     <!--end::Base Styles -->
     <link rel="shortcut icon" href="{{ asset('assets/demo/demo3/media/img/logo/favicon.ico') }}"/>
     <script>
@@ -48,6 +50,7 @@
         ga('create', 'UA-37564768-1', 'auto');
         ga('send', 'pageview');
     </script>
+
 </head>
 
 <!-- end::Head -->
@@ -70,7 +73,11 @@
     <i class="la la-arrow-up"></i>
 </div>
 
-
+<script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script src="{{ asset('assets/vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/demo/default/base/scripts.bundle.js') }}" type="text/javascript"></script>
 

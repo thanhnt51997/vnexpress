@@ -54,7 +54,8 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_create_role').modal('hide');
-                    location.replace("{{ route('roles.index') }}");
+                    $('#data-table-roles').html(response.list_html);
+                    {{--location.replace("{{ route('roles.index') }}");--}}
                 } else {
                     toastr.error(response.message);
                 }
@@ -113,7 +114,7 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_edit_role').modal('hide');
-                    location.replace("{{ route('roles.index') }}");
+                    $('#data-table-roles').html(response.list_html);
                 } else {
                     toastr.error(response.message);
                 }
@@ -124,35 +125,81 @@
         });
     }
 
-    function deleteRole() {
-        $('td').on('click', '.delete-role', function (e) {
-            e.preventDefault();
-            var id = $(this).attr('role-id');
-            if (id == 1) {
-                return toastr.error('Bạn không thể xóa quyền quản trị!');
-            }
-            var name = $(this).attr('role-name');
-            if (confirm('Xác nhận xóa quyền ' + name + '?')) {
-                    $(this).parent().parent().remove();
-                    let url = "{{ route('roles.destroy', 'id') }}";
-                    url = url.replace('id', id);
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: {id: id},
-                        success: function (response) {
-                            if (response.status == 0) {
-                                toastr.error(response.message);
-                            } else {
-                                toastr.success(response.message);
-                            }
-                        },
-                        error: function (response) {
-                            toastr.error(response.message);
-                        }
-                    })
+    function showDeleteRoleModal(id) {
+        let url = "{{ route('roles.modal_delete') }}";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data:  {
+                role_id : id,
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    $('#delete_role').html(response.modal_html);
+                    $('#modal_delete_role').modal('show');
+
+                } else {
+                    toastr.error(response.message);
                 }
+            },
+            error: function (response) {
+                toastr.error(response.message);
+            }
         });
     }
+
+    function deleteRole(id) {
+        let url = "{{ route('roles.destroy') }}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data:  {
+                role_id : id,
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                    $('#modal_delete_role').modal('hide');
+                    $('#data-table-roles').html(response.list_html);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (response) {
+                toastr.error(response.message);
+            }
+        });
+    }
+
+    {{--function deleteRole() {--}}
+    {{--    $('td').on('click', '.delete-role', function (e) {--}}
+    {{--        e.preventDefault();--}}
+    {{--        var id = $(this).attr('role-id');--}}
+    {{--        if (id == 1) {--}}
+    {{--            return toastr.error('Bạn không thể xóa quyền quản trị!');--}}
+    {{--        }--}}
+    {{--        var name = $(this).attr('role-name');--}}
+    {{--        if (confirm('Xác nhận xóa quyền ' + name + '?')) {--}}
+    {{--                $(this).parent().parent().remove();--}}
+    {{--                let url = "{{ route('roles.destroy', 'id') }}";--}}
+    {{--                url = url.replace('id', id);--}}
+    {{--                $.ajax({--}}
+    {{--                    url: url,--}}
+    {{--                    type: 'POST',--}}
+    {{--                    data: {id: id},--}}
+    {{--                    success: function (response) {--}}
+    {{--                        if (response.status == 0) {--}}
+    {{--                            toastr.error(response.message);--}}
+    {{--                        } else {--}}
+    {{--                            toastr.success(response.message);--}}
+    {{--                        }--}}
+    {{--                    },--}}
+    {{--                    error: function (response) {--}}
+    {{--                        toastr.error(response.message);--}}
+    {{--                    }--}}
+    {{--                })--}}
+    {{--            }--}}
+    {{--    });--}}
+    {{--}--}}
 
 </script>

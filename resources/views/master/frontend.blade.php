@@ -38,6 +38,7 @@
 <script type="text/javascript" src="{{ asset('frontend/css/bootstrap/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontend/js/myjs.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 @include('master.indexScript')
 @yield('script')
 </html>

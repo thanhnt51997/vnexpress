@@ -11,7 +11,7 @@
                     <h1 class="title-news"><a
                             href="{{ url('', ['category'=>$hot_news->category->slug,'slug'=>convert_vi_to_en($hot_news->title).'-'.$hot_news->id]) }}">{{ $hot_news->title }}</a>
                     </h1>
-                    <p class="description">{!! substr($hot_news->content, 0, 300) !!}</p>
+                    <p class="description">{!! getShortenSentence($hot_news->content, 30) !!}</p>
                 </div>
                 <div class="col-md-2 related-news flex-column d-ipad" data-spy="scroll" data-offset="7">
                     @foreach($related_news as $related)
@@ -44,8 +44,11 @@
                                 <article class="list-news pt-2 pb-2 border-bottom">
                                     <h5 class="title-news "><a class="title"
                                                                href="{{ url('', ['category'=>$latest_pot->slug,'slug'=>convert_vi_to_en($latest_pot->latestPost->title).'-'.$latest_pot->latestPost->id]) }}">{{ $latest_pot->latestPost->title }}</a>
-                                        <a class="icon-comment"
-                                           href=""><i class="fa fa-comment"><span>328</span></i></a>
+                                        @if(count($latest_pot->latestPost->comment)>0)
+                                            <a class="icon-comment"
+                                               href=""><i
+                                                    class="fa fa-comment"><span>{{ $latest_pot->latestPost->comment }}</span></i></a>
+                                        @endif
                                     </h5>
                                     <div class="thumb-art">
                                         <a class="float-left mr-2"
@@ -54,7 +57,7 @@
                                                 src="{{ asset('storage/'.$latest_pot->latestPost->avatar) }}"
                                                 alt=""></a>
                                         <div class="description">
-                                            <p>{!!  substr($latest_pot->latestPost->content , 0 , 200) !!}
+                                            <p>{!!  getShortenSentence($latest_pot->latestPost->content, 30) !!}
                                             </p></div>
                                     </div>
                                 </article>
@@ -101,23 +104,29 @@
                                     <article class="col-lg-8 list-news">
                                         <h5 class="title-news"><a class="title"
                                                                   href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($category->latest_posts[0]->title).'-'.$category->latest_posts[0]->id]) }}">{{$category->latest_posts[0]->title}}</a>
-                                            <a class="icon-comment"
-                                               href=""><i class="fa fa-comment"><span>328</span></i></a>
+                                            @if(count($latest_pot->latestPost->comment)>0)
+                                                <a class="icon-comment"
+                                                   href=""><i
+                                                        class="fa fa-comment"><span>{{ $category->latest_posts[0]->comment }}</span></i></a>
+                                            @endif
                                         </h5>
                                         <div class="thumb-art row">
-                                            <a class="float-left col-lg-6 col-sm-6 col-12" href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($category->latest_posts[0]->title).'-'.$category->latest_posts[0]->id]) }}"><img
+                                            <a class="float-left col-lg-6 col-sm-6 col-12"
+                                               href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($category->latest_posts[0]->title).'-'.$category->latest_posts[0]->id]) }}"><img
                                                     class="img-fluid"
                                                     src="{{ asset('storage/'.$category->latest_posts[0]->avatar) }}"
                                                     alt=""></a>
                                             <div
-                                                class="description col-lg-6 col-sm-6 col-12">{!! substr($category->latest_posts[0]->content, 0, 200) !!}</div>
+                                                class="description col-lg-6 col-sm-6 col-12">{!! getShortenSentence($category->latest_posts[0]->content, 30) !!}</div>
                                         </div>
                                     </article>
                                     <div class="related-category col-lg-4">
                                         <ul class="d-flex flex-column justify-content-center">
                                             @foreach($category->latest_posts as $key => $post_of_category)
                                                 @if($key != 0)
-                                                    <li><a href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($post_of_category->title).'-'.$post_of_category->id]) }}">{{ $post_of_category->title }}</a></li>
+                                                    <li>
+                                                        <a href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($post_of_category->title).'-'.$post_of_category->id]) }}">{{ $post_of_category->title }}</a>
+                                                    </li>
                                                 @endif
                                             @endforeach
                                         </ul>

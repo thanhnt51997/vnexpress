@@ -15,7 +15,7 @@
                         <span class="m-menu__link-text">Dashboard</span>
                     </a>
                 </li>
-                @if(Session::get('isAdmin') == 'true' )
+                @if(Auth::user() && Auth::user()->superAdmin() )
                 <li class="m-menu__item  m-menu__item--{{ Request::is('admin/users') ? 'active' : null }}"
                     aria-haspopup="true" m-menu-submenu-toggle="hover">
                     <a href="{{ route('users.index') }}" class="m-menu__link m-menu__toggle">

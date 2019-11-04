@@ -53,13 +53,14 @@
                 </div>
                 <div class="m-portlet__body">
                     @if (count($categories) > 0)
-                        <section class="data-table-posts">
+                        <section id="data-table-category">
                             @include('backend.categories.dataTable')
                         </section>
                     @endif
                 </div>
                 <div id="modal_create"></div>
                 <div id="modal_edit"></div>
+                <div id="delete_category"></div>
             </div>
         </div>
     </div>

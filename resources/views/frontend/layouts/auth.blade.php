@@ -13,7 +13,6 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">Thông tin tài khoản</a>
                 <a class="dropdown-item" href="{{ route('frontend.logout') }}">Đăng xuất</a>
-{{--                <a class="dropdown-item" href="#">Link 3</a>--}}
             </div>
         </div>
     </li>

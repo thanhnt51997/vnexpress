@@ -81,6 +81,6 @@ class RegistrationController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return java_reload();
+        return redirect()->route('frontend');
     }
 }

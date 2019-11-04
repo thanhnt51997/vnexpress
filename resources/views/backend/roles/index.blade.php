@@ -16,7 +16,7 @@
                         <li class="m-nav__separator">--</li>
                         <li class="m-nav__item">
                             <a href="{{ route('roles.index') }}" class="m-nav__link">
-                                <span class="m-nav__link-text">Users</span>
+                                <span class="m-nav__link-text">Phân quyền</span>
                             </a>
                         </li>
                     </ul>
@@ -53,13 +53,14 @@
                 </div>
                 <div class="m-portlet__body">
                     @if (count($roles) > 0)
-                        <section class="data-table-posts">
+                        <section id="data-table-roles">
                             @include('backend.roles.dataTable')
                         </section>
                     @endif
                 </div>
                 <div id="modal_create"></div>
                 <div id="modal_edit"></div>
+                <div id="delete_role"></div>
             </div>
         </div>
     </div>

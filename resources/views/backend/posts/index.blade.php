@@ -37,8 +37,10 @@
                                 <div class="form-group m-form__group row align-items-center">
                                     <div class="col-md-4">
                                         <div class="m-input-icon m-input-icon--left">
-                                            <input type="text" class="form-control m-input" placeholder="Search..."
-                                                   id="generalSearch">
+                                            <div class="input-group">
+                                                <input id="searchPost" name="search" type="text" class="form-control"
+                                                       placeholder="Search"/>
+                                            </div>
                                             <span class="m-input-icon__icon m-input-icon__icon--left"><span>
 																<i class="la la-search"></i>
 															</span>
@@ -57,9 +59,9 @@
                         </div>
                     </div>
                     @if (count($posts) > 0)
-                        <section class="data-table-posts">
+                        <div id="data-table-posts">
                             @include('backend.posts.dataTable')
-                        </section>
+                        </div>
                     @endif
                 </div>
 

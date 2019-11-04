@@ -84,4 +84,65 @@
             }
         });
     }
+
+    function initValidateUpdateComment() {
+        $("#m_form_edit_comment").validate({
+            rules: {
+                content: {required: !0},
+            }, invalidHandler: function (e, r) {
+                $("#m_form_1_msg").removeClass("m--hide").show();
+            }, submitHandler: function (e) {
+            }
+        })
+    }
+
+    function showEditCommentModal(id) {
+        let url = "{{ route('frontend.comment.getEditModal') }}";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data:  {
+                comment_id : id,
+                post_id: $('#post-id').val()
+            },
+            success: function (response) {
+                if (response.status == 0) {
+                    toastr.error(response.message);
+                } else {
+                    $('#edit_comment').html(response.modal_html);
+                    $('#modal_edit_comment').modal('show');
+                    initValidateUpdateComment();
+                }
+            },
+            error: function (response) {
+                toastr.error(response.message);
+            }
+        });
+    }
+
+    function updateComment(id) {
+        let url = "{{ route('frontend.comment.update') }}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                comment_id : id,
+                post_id: $('#post-id').val(),
+                content: $('#content-update').val()
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                    $('#modal_edit_comment').modal('hide');
+                    $('#list_data_comment').html(response.list_html);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (response) {
+                toastr.error(response.message);
+            }
+        });
+    }
+
 </script>

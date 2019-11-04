@@ -44,7 +44,8 @@ class Role extends Model
 
     private function hasPermission(string $permission) : bool
     {
-        return $this->permissions[$permission] ?? false;
+        $permission_arr = json_decode($this->permissions, true);
+        return isset($permission_arr[$permission]) ? ($permission_arr[$permission] == "true" ? true : false) : false;
     }
 
 }

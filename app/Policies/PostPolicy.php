@@ -19,6 +19,7 @@ class PostPolicy
 
     public function create(User $user)
     {
+//        dd($user->hasAccess(['post.create']));
         return $user->hasAccess(['post.create']);
     }
 

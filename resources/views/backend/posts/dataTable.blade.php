@@ -1,4 +1,4 @@
-<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" id="data_table_posts">
+<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
     <table class="table table-striped- table-bordered table-hover dtr-inline" id="html_table"
            width="100%"
            style="min-height: 300px; overflow-x: auto;">
@@ -44,7 +44,7 @@
                         style="width: 133px;">{{ $post->title }}</span>
                 </td>
                 <td data-field="content" class="m-datatable__cell "><span class="content"
-                                                                          style="width: 203px;">{!! substr($post->content, 0, 200) !!}</span>
+                                                                          style="width: 203px;">{!! getShortenSentence($post->content, 20) !!}</span>
                 </td>
                 <td data-field="avatar" class="m-datatable__cell text-center"><img class="img-fluid"
                                                                                    width="150px"
@@ -54,8 +54,12 @@
                         style="width: 133px;">{{ $post->view }}</span></td>
                 <td data-field="user-id" class="m-datatable__cell"><span
                         style="width: 133px;">{{ $post['user']->name }}</span></td>
-                <td data-field="category-id" class="m-datatable__cell"><span
-                        style="width: 133px;">{{ $post['category']->name }}</span>
+                <td data-field="category-id" class="m-datatable__cell">
+                    @if(isset($post['category']->name))
+                        <span
+                            style="width: 133px;">{{ $post['category']->name }}
+                        </span>
+                    @endif
                 </td>
                 <td data-field="status" class="datatable__cell"><span
                         class="m-badge {{($post->status == config('app.active')) ? 'm-badge--primary' : ' m-badge--warning' }}  m-badge--wide"
@@ -82,5 +86,6 @@
         @endforeach
         </tbody>
     </table>
-    {!! $posts->render() !!}
+</div>
+<div>    {!! $posts->render() !!}
 </div>

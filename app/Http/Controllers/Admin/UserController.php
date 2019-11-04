@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Role;
 use App\Model\User;
+use App\Repository\Role\UserRepositoryInterface;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,21 +15,22 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     protected $user;
-
+    protected $userRepo;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(User $user)
+    public function __construct(User $user, UserRepositoryInterface $userRepo)
     {
         $this->user = $user;
-//        $this->authorize('admin');
+        $this->userRepo = $userRepo;
     }
 
     public function index(Request $request)
     {
-        $users = $this->user->with('roles')->paginate(config('app.paginate'));
+        $users = $this->userRepo->getListData('1',true);
+//        $users = $this->user->with('roles')->paginate(config('app.paginate'));
         if ($request->ajax()) {
             return view('backend.users.dataTable', ['users' => $users])->render();
         }
@@ -209,4 +211,5 @@ class UserController extends Controller
             'message' => 'Xóa user thành công!'
         ]);
     }
+
 }

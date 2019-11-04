@@ -6,14 +6,14 @@
             }
         });
         $(".alert-success").delay(1000).slideUp(500);
+        initPagination();
 
     });
 
 
-    $(function () {
+    function initPagination() {
         $('body').on('click', '.pagination a', function (e) {
             e.preventDefault();
-
             $('#data_table_posts a').css('color', '#dfecf6');
             $('#data_table_posts').append('<img style="position: absolute; width: 100px; left: 50%; top: 50%; z-index: 100000;" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />');
 
@@ -21,17 +21,29 @@
             getPosts(url);
             window.history.pushState("", "", url);
         });
+    }
 
-        function getPosts(url) {
-            $.ajax({
-                url: url
-            }).done(function (data) {
-                $('.data-table-posts').html(data);
-            }).fail(function () {
-                alert('Posts could not be loaded.');
-            });
-        }
-    });
+    function initHrefForPagination() {
+        let baseUrl = '{{ route("posts.index") }}';
+        window.history.pushState("", "", baseUrl);
+        $('.pagination a').each(function() {
+            let url = $(this).attr('href');
+            let url_split_arr = url.split('?');
+            let newUrl = baseUrl + '?' + url_split_arr[1];
+            // set new href
+            $(this).attr('href', newUrl);
+        });
+    }
+
+    function getPosts(url) {
+        $.ajax({
+            url: url
+        }).done(function (data) {
+            $('#data-table-posts').html(data);
+        }).fail(function () {
+            alert('Posts could not be loaded.');
+        });
+    }
 
     function showEditModal(id) {
         let url = "{{ route('posts.modal_edit', ':id') }}";
@@ -52,7 +64,7 @@
                 }
             },
             error: function (response) {
-                if(response.status == 403) {
+                if (response.status == 403) {
                     toastr.error('Bạn không thể sửa bài viết này!');
                 }
             }
@@ -91,7 +103,9 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_edit_post').modal('hide');
-                    location.replace("{{ route('posts.index') }}");
+                    $('#data-table-posts').html(response.list_html);
+                    initPagination();
+                    initHrefForPagination();
                 } else {
                     toastr.error(response.message);
                 }
@@ -115,10 +129,10 @@
                     type: 'POST',
                     data: {id: id},
                     success: function (response) {
-                        if (response.status == 0) {
-                            toastr.error(response.message);
-                        } else {
+                        if (response.status == 1) {
                             toastr.success(response.message);
+                        } else {
+                            toastr.error(response.message);
                         }
                     },
                     error: function (response) {

@@ -75,7 +75,6 @@ class User extends Authenticatable
 
     public function superAdmin()
     {
-
         foreach ($this->roles as $role) {
             $permission_arr = json_decode($role->permissions, true);
             $admin = array_key_exists('user', $permission_arr);

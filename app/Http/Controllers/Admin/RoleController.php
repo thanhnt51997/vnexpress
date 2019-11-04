@@ -3,21 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Role;
+use App\Repository\Role\RoleRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
     protected $role;
+    protected $roleRepo;
 
-    public function __construct(Role $role)
+    public function __construct(Role $role, RoleRepositoryInterface $roleRepo)
     {
         $this->role = $role;
+        $this->roleRepo = $roleRepo;
     }
 
     public function index(Request $request)
     {
-        $roles = $this->role->latest('created_at')->paginate(config('app.paginate'));
+        $roles = $this->roleRepo->getListData(null, true);
         if ($request->ajax()) {
             return view('backend.roles.dataTable', ['roles' => $roles])->render();
         }
@@ -44,7 +47,7 @@ class RoleController extends Controller
             $message = 'Vui lòng nhập dữ liệu';
         }
         if (empty($input['permissions'])) {
-            $message = 'Vui lòng choasdasd';
+            $message = 'Vui lòng chọn chức năng cho quyền này!';
         }
         $nameCreate = Role::where('name', $input['name'])->first();
         if (!empty($nameCreate)) {
@@ -70,17 +73,19 @@ class RoleController extends Controller
         }
         $input['permissions'] = json_encode($permission_arr);
         Role::create($input);
+        $roles = $this->role->latest('created_at')->paginate(config('app.paginate'));
         return Response()->json([
             'status' => 1,
-            'message' => 'Tạo quyền hạn thành công!'
+            'message' => 'Tạo quyền hạn thành công!',
+            'list_html' => view('backend.roles.dataTable', compact('roles'))->render()
         ]);
     }
 
     public function getEditModal($id)
     {
-        $role = Role::find($id);
+        $role = $this->roleRepo->findById($id);
         $oldPermission = json_decode($role->permissions, true);
-        $checked = array_filter($oldPermission,function ($value){
+        $checked = array_filter($oldPermission, function ($value) {
             return $value == 'true';
         });
         $check_permisson_arr = array_keys($checked);
@@ -95,7 +100,7 @@ class RoleController extends Controller
 
         return Response()->json([
             'status' => 1,
-            'modal_html' => view('backend.roles.edit', compact('role','list_permission', 'check_permisson_arr'))->render()
+            'modal_html' => view('backend.roles.edit', compact('role', 'list_permission', 'check_permisson_arr'))->render()
         ]);
     }
 
@@ -103,7 +108,7 @@ class RoleController extends Controller
     {
         $message = null;
         $this->validateData($input);
-        $name = Role::where('name', $input['name'])->where('id', '<>', $id)->first();
+        $name = $this->roleRepo->getDataValidate($input['name'], $id);
         if (!empty($name)) {
             $message = 'Quyền hạn này đã tồn tại! Vui lòng kiểm tra lại';
         }
@@ -112,7 +117,7 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
+        $role =$this->roleRepo->findById($id);
         if (empty($role)) {
             return Response()->json([
                 'status' => 0,
@@ -133,32 +138,42 @@ class RoleController extends Controller
         }
         $input['permissions'] = json_encode($permission_arr);
         $role->update($input);
+        $roles = $this->roleRepo->getListData(null, true);
         return Response()->json([
             'status' => 1,
-            'message' => 'Cập nhật quyền hạn thành công!'
+            'message' => 'Cập nhật quyền hạn thành công!',
+            'list_html' => view('backend.roles.dataTable', compact('roles'))->render()
+
         ]);
     }
 
-    public function destroy($id)
+    public function getDeleteModal(Request $request)
     {
-        $role = Role::findOrFail($id);
-        if ($id == 1) {
-            return Response()->json([
-                'status' => 0,
-                'message' => 'Bạn không thể xóa quyền quản trị!'
-            ]);
-        }
-        $role->delete();
+        $input = $request->all();
+        $role =  $this->roleRepo->findById($input['role_id']);
         return Response()->json([
             'status' => 1,
-            'message' => 'Xóa danh mục thành công!'
+            'modal_html' => view('backend.roles.modal_delete_role', compact('role'))->render()
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->role_id;
+        $role = $this->roleRepo->findById($id);
+        $role->delete();
+        $roles = $this->roleRepo->getListData(null, true);
+        return Response()->json([
+            'status' => 1,
+            'message' => 'Xóa quyền hạn thành công!',
+            'list_html' => view('backend.roles.dataTable', compact('roles'))->render()
         ]);
     }
 
     public function getPermissionList()
     {
         return [
-            'user'=> 'Quản lý người dùng',
+            'user' => 'Quản lý người dùng',
             'post.create' => 'Viết bài',
             'post.update' => 'Sửa bài viết',
             'post.delete' => 'Xóa bài viết',

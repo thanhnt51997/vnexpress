@@ -34,4 +34,10 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function whereCategoryId($id)
+    {
+        dd($id  );
+        return $this->category()->id;
+    }
 }

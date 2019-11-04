@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'member']], function () {
     Route::get('/', 'DashboardController@index')->name('admin');
     Route::group(['prefix' => 'users', 'middleware' => 'admin'], function () {
         Route::get('/', 'UserController@index')->name('users.index');
@@ -27,6 +27,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::post('/update-user/{id}', 'UserController@update')->name('users.update');
         Route::post('/delete/{id}', 'UserController@destroy')->name('users.destroy');
     });
+
+    Route::get('profile/', 'ProfileUserController@index')->name('profile.index');
 
     Route::get('posts', 'PostController@index')->name('posts.index');
     Route::get('posts/create', 'PostController@create')
@@ -47,21 +49,25 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('posts/delete/{id}', 'PostController@destroy')
         ->name('posts.destroy')
         ->middleware('can:post.delete,id');
+    Route::get('/search/posts', 'PostController@searchPost')->name('posts.search');
 
     Route::get('categories', 'CategoryController@index')->name('categories.index');
     Route::get('categories/modal_create', 'CategoryController@getCreateModal')->name('categories.modal_create');
     Route::post('categories/create-category', 'CategoryController@store')->name('categories.store');
     Route::get('categories/modal_edit/{id}', 'CategoryController@getEditModal')->name('categories.modal_edit');
     Route::post('categories/update/{id}', 'CategoryController@update')->name('categories.update');
-    Route::post('categories/delete/{id}', 'CategoryController@destroy')->name('categories.destroy');
+    Route::get('categories/modal_delete/', 'CategoryController@getDeleteModal')->name('categories.modal_delete');
+    Route::post('categories/delete/', 'CategoryController@destroy')->name('categories.destroy');
 
-    Route::get('roles', 'RoleController@index')->name('roles.index');
-    Route::get('roles/modal_create', 'RoleController@getCreateModal')->name('roles.modal_create');
-    Route::post('roles/create-role', 'RoleController@store')->name('roles.store');
-    Route::get('roles/modal_edit/{id}', 'RoleController@getEditModal')->name('roles.modal_edit');
-    Route::post('roles/update/{id}', 'RoleController@update')->name('roles.update');
-    Route::post('roles/delete/{id}', 'RoleController@destroy')->name('roles.destroy');
-
+    Route::group(['prefix' => 'roles', 'middleware' => 'admin'], function () {
+        Route::get('/', 'RoleController@index')->name('roles.index');
+        Route::get('/modal_create', 'RoleController@getCreateModal')->name('roles.modal_create');
+        Route::post('/create-role', 'RoleController@store')->name('roles.store');
+        Route::get('/modal_edit/{id}', 'RoleController@getEditModal')->name('roles.modal_edit');
+        Route::post('/update/{id}', 'RoleController@update')->name('roles.update');
+        Route::get('/modal_delete/', 'RoleController@getDeleteModal')->name('roles.modal_delete');
+        Route::post('/delete', 'RoleController@destroy')->name('roles.destroy');
+    });
     Route::get('permissions', 'PermissionController@index')->name('permissions.index');
     Route::get('permissions/permission', 'PermissionController@getCreateModal')->name('permissions.modal_create');
     Route::post('permissions/create-permission', 'PermissionController@store')->name('permissions.store');
@@ -84,7 +90,8 @@ Route::group(['namespace' => 'Frontend', 'prefix' => '/'], function () {
     Route::post('comment','CommentController@postComment')->name('frontend.comment.post');
     Route::get('/modal_delete_comment', 'CommentController@getDeleteModal')->name('frontend.comment.getDeleteModal');
     Route::post('comment/delete', 'CommentController@destroy')->name('frontend.comment.destroy');
-
+    Route::get('/modal_edit_comment', 'CommentController@getEditModal')->name('frontend.comment.getEditModal');
+    Route::post('comment/edit', 'CommentController@update')->name('frontend.comment.update');
 });
 
 

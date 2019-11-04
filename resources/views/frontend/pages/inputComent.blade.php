@@ -1,6 +1,8 @@
 <div class="input-comment form-group m-form__group">
     <form class="form-horizontal p-2" id="form_comment_user">
+        @if(isset(Auth::user()->id))
         <input type="hidden" id="user-id" name="user_id" value="{{ Auth::user()->id }}">
+        @endif
         <input type="hidden" id="post-id" name="post_id" value="{{ $post->id }}">
             <textarea onclick="{{ (!Auth::user()) ? 'showLoginModal()' : ''}}"
                   placeholder="Ý kiến của bạn..."

@@ -10,6 +10,7 @@
         h = c.toString, u = c.hasOwnProperty, d = u.toString, p = d.call(Object), f = {}, m = function (t) {
             return "function" == typeof t && "number" != typeof t.nodeType
         }, g = function (t) {
+
             return null != t && t === t.window
         }, v = {type: !0, src: !0, noModule: !0};
 

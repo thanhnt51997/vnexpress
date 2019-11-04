@@ -112,7 +112,7 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_edit_category').modal('hide');
-                    location.replace("{{ route('categories.index') }}");
+                    $('#data-table-category').html(response.list_html);
                 } else {
                     toastr.error(response.message);
                 }
@@ -123,32 +123,51 @@
         });
     }
 
-    function deleteCategory() {
-        $('td').on('click', '.delete-category', function (e) {
-            e.preventDefault();
-            var id = $(this).attr('category-id');
-            var name = $(this).attr('category-name');
-            if (confirm('Xác nhận xóa danh mục ' + name + '?')) {
-                $(this).parent().parent().remove();
-                let url = "{{ route('categories.destroy', 'id') }}";
-                url = url.replace('id', id);
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {id: id},
-                    success: function (response) {
-                        if (response.status == 0) {
-                            toastr.error(response.message);
-                        } else {
-                            toastr.success(response.message);
-                        }
-                    },
-                    error: function (response) {
-                        toastr.error(response.message);
-                    }
-                })
+    function showDeleteCategoryModal(id) {
+        let url = "{{ route('categories.modal_delete') }}";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data:  {
+                category_id : id,
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    $('#delete_category').html(response.modal_html);
+                    $('#modal_delete_category').modal('show');
+
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (response) {
+                toastr.error(response.message);
             }
         });
     }
+
+    function deleteCategory(id) {
+        let url = "{{ route('categories.destroy') }}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data:  {
+                category_id : id,
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                    $('#modal_delete_category').modal('hide');
+                    $('#data-table-category').html(response.list_html);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (response) {
+                toastr.error(response.message);
+            }
+        });
+    }
+
 
 </script>

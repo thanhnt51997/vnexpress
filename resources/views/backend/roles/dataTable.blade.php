@@ -34,7 +34,7 @@
                             <a href="javascript:;"
                                role-id="{{ $role->id }}"
                                role-name="{{ $role->name }}"
-                               onclick="deleteRole()"
+                               onclick="showDeleteRoleModal({{ $role->id }})"
                                class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill delete-role"
                                title="Delete">
                                 <i class="la la-trash"></i>

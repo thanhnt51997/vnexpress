@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Model\Comment;
+use App\Model\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -28,75 +30,87 @@ class CommentController extends Controller
         }
         Comment::create($input);
         $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $now = Carbon::now();
         return Response()->json([
             'status' => 1,
             'message' => 'Bình luận bài viết thành công!',
-            'list_html' => view('frontend.pages.dataComment', compact('comments'))->render()
+            'list_html' => view('frontend.pages.dataComment', compact('comments','now'))->render()
         ]);
     }
 
-    public function getDeleteModal(Request $request)
+    public function validateComment($input)
     {
-        $input = $request->all();
-        $post = Comment::find($input['post_id']);
-        if(empty($post)){
+        $post = Post::find($input['post_id']);
+        if (empty($post)) {
             return Response()->json([
                 'status' => 0,
                 'message' => 'Bài viết không tồn tại!',
             ]);
         }
-
         $comment = Comment::find($input['comment_id']);
-        if(empty($comment)){
+        if (empty($comment)) {
             return Response()->json([
                 'status' => 0,
                 'message' => 'Bình luận không tồn tại!',
             ]);
         }
-        if ($comment->user_id != Auth::user()->id)
-        {
+        if ($comment->user_id != Auth::user()->id && !Auth::user()->superAdmin()) {
             return Response()->json([
                 'status' => 0,
                 'message' => 'Bạn không có quyền xóa bình luận này',
             ]);
         }
+    }
+
+    public function getDeleteModal(Request $request)
+    {
+        $input = $request->all();
+        $this->validateComment($input);
+        $comment = Comment::find($input['comment_id']);
         return Response()->json([
             'status' => 1,
-            'modal_html' => view('frontend.pages.modal_delete_comment',compact('comment'))->render()
+            'modal_html' => view('frontend.pages.modal_delete_comment', compact('comment'))->render()
         ]);
     }
 
     public function destroy(Request $request)
     {
         $input = $request->all();
-        $post = Comment::find($input['post_id']);
-        if(empty($post)){
-            return Response()->json([
-                'status' => 0,
-                'message' => 'Bài viết không tồn tại!',
-            ]);
-        }
-
         $comment = Comment::find($input['comment_id']);
-        if(empty($comment)){
-            return Response()->json([
-                'status' => 0,
-                'message' => 'Bình luận không tồn tại!',
-            ]);
-        }
-        if ($comment->user_id != Auth::user()->id)
-        {
-            return Response()->json([
-                'status' => 0,
-                'message' => 'Bạn không có quyền xóa bình luận này',
-            ]);
-        }
         $comment->delete();
         $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $now = Carbon::now();
         return Response()->json([
             'status' => 1,
             'message' => 'Xóa bình luận thành công!',
-            'list_html' => view('frontend.pages.dataComment', compact('comments'))->render()
+            'list_html' => view('frontend.pages.dataComment', compact('comments','now'))->render()
+        ]);
+    }
+
+
+    public function getEditModal(Request $request)
+    {
+        $input = $request->all();
+        $this->validateComment($input);
+        $comment = Comment::find($input['comment_id']);
+        return Response()->json([
+            'status' => 1,
+            'modal_html' => view('frontend.pages.modal_edit_comment', compact('comment'))->render()
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $input = $request->all();
+        $this->validateComment($input);
+        $comment = Comment::find($input['comment_id']);
+        $comment->update($input);
+        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $now = Carbon::now();
+        return Response()->json([
+            'status' => 1,
+            'message' => 'Sửa bình luận thành công!',
+            'list_html' => view('frontend.pages.dataComment', compact('comments','now'))->render()
         ]);
     }
 }
