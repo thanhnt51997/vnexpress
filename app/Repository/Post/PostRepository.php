@@ -13,7 +13,7 @@ use App\Model\Post;
 use App\Repository\BaseRepository;
 use Illuminate\Database\DatabaseManager;
 
-class PostRepository extends BaseRepository implements  PostRepositoryInterface
+class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
     protected $model;
 
@@ -32,7 +32,7 @@ class PostRepository extends BaseRepository implements  PostRepositoryInterface
      * @return BaseRepository[]|\Illuminate\Database\Eloquent\Collection|void
      */
 
-    public function getListData($user_id = null, $category_id = null, $status = null, $paginate = false)
+    public function getListData($user_id = null, $category_id = null, $status = null, $mostView = false, $limit = null, $paginate = false, $ignored_id = null)
     {
         $query = Post::whereNull('deleted_at')->with('category', 'user');
         if (!is_null($user_id)) {
@@ -45,10 +45,20 @@ class PostRepository extends BaseRepository implements  PostRepositoryInterface
         if (!is_null($status)) {
             $query = $query->where('status', $status);
         }
-        $query = $query->latest('created_at');
+        if (!is_null($ignored_id)) {
+            $query = $query->where('id', '<>', $ignored_id);
+        }
+        if (($mostView)) {
+            $query = $query->latest('view');
+        } else {
+            $query = $query->latest('created_at');
+        }
+        if (!is_null($limit)) {
+            $query = $query->limit($limit);
+        }
         if (($paginate)) {
             $query = $query->paginate(config('app.paginate'));
-        }else{
+        } else {
             $query = $query->get();
         }
         return $query;

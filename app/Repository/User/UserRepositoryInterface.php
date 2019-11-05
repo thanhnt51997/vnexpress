@@ -9,5 +9,5 @@ use Throwable;
 interface UserRepositoryInterface extends RepositoryInterface
 {
     public function getListData($status = null, $paginate = false);
-//    public function getDataValidate($name = null, $id = null);
+    public function getDataValidate($name = null, $email = null, $phone = null, $id = null);
 }

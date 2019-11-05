@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+
+    {
+        $this->middleware('verified');
+        $this->middleware(['checkStatus'])->except('logout');
+
+    }
+
     public function getLogin()
     {
         return Response()->json([
@@ -41,6 +49,7 @@ class LoginController extends Controller
             ]);
         }
 //        $user = User::find($input);
+
         $auth = Auth::attempt(['email' => $input['email'], 'password' => $input['password']]);
         if ($auth) {
 //            Auth::login($auth);

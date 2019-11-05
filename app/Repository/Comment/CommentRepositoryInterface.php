@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repository\Category;
+namespace App\Repository\Comment;
 
-use App\Model\Category;
+use App\Model\Comment;
 use App\Repository\RepositoryInterface;
 use Throwable;
 
-interface CategoryRepositoryInterface extends RepositoryInterface
+interface CommentRepositoryInterface extends RepositoryInterface
 {
-    public function getListData($status = null, $with = false, $limit = null, $paginate = false);
-    public function getDataValidate($name = null, $slug = null, $id = null);
+    public function getListData($with = false, $post_id = null, $paginate = false);
 }

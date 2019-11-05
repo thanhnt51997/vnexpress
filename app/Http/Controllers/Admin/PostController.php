@@ -11,7 +11,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repository\Post\PostRepository;
+use App\Repository\Post\FrontendRepository;
 use App\Repository\Post\PostRepositoryInterface;
 
 class PostController extends Controller
@@ -29,7 +29,7 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts = $this->postRepository->getListData(null, null , '1', true);
+        $posts = $this->postRepository->getListData(null, null,'1', false, null, true);
 //        $posts = $this->post->with('category', 'user')->latest('created_at')->paginate(config('app.paginate'));
         $isAdmin = Auth::user()->superAdmin();
         $user_id = Auth::user()->id;
@@ -112,7 +112,7 @@ class PostController extends Controller
         }
 
         $post->update($input);
-        $posts = $this->post->with('category', 'user')->latest('created_at')->paginate(config('app.paginate'));
+        $posts = $this->postRepository->getListData(null, null,'1', false, null, true);
         $user_id = Auth::user()->id;
         $isAdmin = Auth::user()->superAdmin();
         return Response()->json([

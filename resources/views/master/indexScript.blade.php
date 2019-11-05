@@ -118,7 +118,8 @@
                 }
             },
             error: function (response) {
-                toastr.error(response.message);
+                console.log(response);
+                toastr.error(response.responseJSON.message);
             }
         });
     }

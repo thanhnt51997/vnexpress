@@ -6,15 +6,15 @@
  * Time: 10:20 AM
  */
 
-namespace App\Repository\Category;
+namespace App\Repository\Comment;
 
 
-use App\Model\Category;
+use App\Model\Comment;
 use App\Repository\BaseRepository;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
+class CommentRepository extends BaseRepository implements CommentRepositoryInterface
 {
     protected $model;
 
@@ -23,23 +23,20 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      *
      * @param User $model
      */
-    public function __construct(Category $model)
+    public function __construct(Comment $model)
     {
         parent::__construct($model);
     }
 
-    public function getListData($status = null, $with = false, $limit = null, $paginate = false)
+    public function getListData($with = false, $post_id = null, $paginate = false)
     {
-        $query = Category::whereNull('deleted_at');
+        $query = Comment::whereNull('deleted_at');
 
-        if (!is_null($status)) {
-            $query = $query->where('status', $status);
-        }
         if (($with)) {
-            $query = $query->with(['posts', 'latestPost', 'latest_posts'])->whereHas('latestPost');
+            $query = $query->with(['user', 'post']);
         }
-        if (!is_null($limit)) {
-            $query = $query->limit($limit);
+        if (!is_null($post_id)) {
+            $query = $query->where('post_id', $post_id);
         }
         if (($paginate)) {
             $query = $query->paginate(config('app.paginate'));
@@ -49,19 +46,4 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return $query;
     }
 
-    public function getDataValidate($name = null, $slug = null, $id = null)
-    {
-        $query = Category::whereNull('deleted_at');
-        if (!is_null($name)) {
-            $query = $query->where('name', $name);
-        }
-        if (!is_null($slug)) {
-            $query = $query->where('slug', $slug);
-        }
-        if (!is_null($id)) {
-            $query = $query->where('id','<>', $id);
-        }
-        $query = $query->first();
-        return $query;
-    }
 }

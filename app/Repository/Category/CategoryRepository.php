@@ -28,20 +28,41 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         parent::__construct($model);
     }
 
-    public function getListData($status = null, $paginate = false)
+    public function getListData($status = null, $with = false, $limit = null, $paginate = false, $orderBy = false)
     {
-        $query = Category::whereNull('deleted_at')->with('posts');
+        $query = Category::whereNull('deleted_at');
 
         if (!is_null($status)) {
             $query = $query->where('status', $status);
         }
-        $query = $query->latest('created_at');
+        if (($with)) {
+            $query = $query->with(['posts', 'latestPost', 'latest_posts'])->whereHas('latestPost');
+        }
+        if (!is_null($limit)) {
+            $query = $query->limit($limit);
+        }
+        if (($orderBy)) {
+            $query = $query->orderBy('created_at', 'desc');
+        } else {
+            $query = $query->orderBy('created_at', 'asc');
+        }
         if (($paginate)) {
             $query = $query->paginate(config('app.paginate'));
         } else {
             $query = $query->get();
         }
         return $query;
+    }
+
+    public function getMenuCategory($to)
+    {
+        $query = Category::whereNull('deleted_at');
+        if ($to < 8){
+            $query->where('id', '<', $to);
+        }else{
+            $query->where('id', '>=', $to);
+        }
+        return $query->get();
     }
 
     public function getDataValidate($name = null, $slug = null, $id = null)
@@ -54,7 +75,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             $query = $query->where('slug', $slug);
         }
         if (!is_null($id)) {
-            $query = $query->where('id','<>', $id);
+            $query = $query->where('id', '<>', $id);
         }
         $query = $query->first();
         return $query;

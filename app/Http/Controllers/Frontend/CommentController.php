@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Model\Comment;
 use App\Model\Post;
+use App\Repository\Comment\CommentRepositoryInterface;
+use App\Repository\Post\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
@@ -11,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    protected $commentRepo;
+    protected $postRepo;
+    public function __construct(CommentRepositoryInterface $commentRepo, PostRepositoryInterface $postRepo)
+    {
+        $this->commentRepo = $commentRepo;
+        $this->postRepo = $postRepo;
+    }
     public function validateData($input)
     {
         $message = null;
@@ -29,7 +38,8 @@ class CommentController extends Controller
             ]);
         }
         Comment::create($input);
-        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+//        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $comments = $this->commentRepo->getListData(true, $input['post_id'], false);
         $now = Carbon::now();
         return Response()->json([
             'status' => 1,
@@ -40,14 +50,15 @@ class CommentController extends Controller
 
     public function validateComment($input)
     {
-        $post = Post::find($input['post_id']);
+//        $post = Post::find($input['post_id']);
+        $post = $this->postRepo->findById($input['post_id']);
         if (empty($post)) {
             return Response()->json([
                 'status' => 0,
                 'message' => 'Bài viết không tồn tại!',
             ]);
         }
-        $comment = Comment::find($input['comment_id']);
+        $comment = $this->commentRepo->findById($input['comment_id']);
         if (empty($comment)) {
             return Response()->json([
                 'status' => 0,
@@ -66,7 +77,7 @@ class CommentController extends Controller
     {
         $input = $request->all();
         $this->validateComment($input);
-        $comment = Comment::find($input['comment_id']);
+        $comment = $this->commentRepo->findById($input['comment_id']);
         return Response()->json([
             'status' => 1,
             'modal_html' => view('frontend.pages.modal_delete_comment', compact('comment'))->render()
@@ -76,9 +87,10 @@ class CommentController extends Controller
     public function destroy(Request $request)
     {
         $input = $request->all();
-        $comment = Comment::find($input['comment_id']);
+        $comment = $this->commentRepo->findById($input['comment_id']);
         $comment->delete();
-        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+//        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $comments = $this->commentRepo->getListData(true, $input['post_id'], false);
         $now = Carbon::now();
         return Response()->json([
             'status' => 1,
@@ -92,7 +104,7 @@ class CommentController extends Controller
     {
         $input = $request->all();
         $this->validateComment($input);
-        $comment = Comment::find($input['comment_id']);
+        $comment = $this->commentRepo->findById($input['comment_id']);
         return Response()->json([
             'status' => 1,
             'modal_html' => view('frontend.pages.modal_edit_comment', compact('comment'))->render()
@@ -103,9 +115,9 @@ class CommentController extends Controller
     {
         $input = $request->all();
         $this->validateComment($input);
-        $comment = Comment::find($input['comment_id']);
+        $comment = $this->commentRepo->findById($input['comment_id']);
         $comment->update($input);
-        $comments = Comment::where('post_id', $input['post_id'])->with('user')->orderBy('created_at', 'desc')->get();
+        $comments = $this->commentRepo->getListData(true, $input['post_id'], false);
         $now = Carbon::now();
         return Response()->json([
             'status' => 1,

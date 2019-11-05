@@ -22,7 +22,7 @@
                 <div class="box_infographics topic_img clearfix pl-3">
                     <h5 class="header_toppic font-weight-bold"><a href="">{{ $post->category->name }}</a></h5>
                     <ul class="list_title">
-                        @foreach($related_pots as $related)
+                        @foreach($related_posts as $related)
                             <li>
                                 <h6>
                                     <a href="{{ url('',['category'=>$related->category->slug, 'slug'=>convert_vi_to_en($related->title).'-'.$related->id]) }}"

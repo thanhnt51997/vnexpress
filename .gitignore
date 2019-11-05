@@ -1,5 +1,10 @@
 /node_modules
 /public/hot
+/public/assets
+/public/backend
+/public/vendor
+/public/frontend
+/public/ckeditor
 /public/storage
 /storage/*.key
 /vendor

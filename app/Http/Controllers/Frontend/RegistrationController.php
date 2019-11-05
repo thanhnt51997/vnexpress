@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Model\Role;
 use App\Model\User;
 use http\Env\Response;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,20 @@ use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
+    use RegistersUsers;
+
+    protected $redirectTo = '/home';
+
     public function create()
     {
         return Response()->json([
             'status' => 1,
             'modal_html' => view('frontend.auth.register')->render()
         ]);
+    }
+    public function __construct()
+    {
+        $this->middleware('guest');
     }
 
     protected function validator($input)
@@ -67,11 +76,11 @@ class RegistrationController extends Controller
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
-            'status' => 1,
+            'status' => 0,
             'password' => Hash::make($input['password']),
         ]);
         $user->roles()->attach(['role_id' => 3]);
-        Auth::login($user);
+//        Auth::login($user);
         return Response()->json([
             'status' => 1,
             'message' => 'Tạo tài khoản thành công!'

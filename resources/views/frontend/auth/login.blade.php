@@ -42,7 +42,9 @@
                         <div class="form-group m-form__group row">
                             <label class="col-form-label  el col-lg-3 col-sm-12">Mật khẩu *</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
-                                <input placeholder="Nhập mật khẩu..." id="password" type="password" class="m-input form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input placeholder="Nhập mật khẩu..." id="password" type="password"
+                                       class="m-input form-control @error('password') is-invalid @enderror"
+                                       name="password" required autocomplete="new-password">
                                 <p class="font-weight-bold text-danger">{{ $errors->first('password') }}</p>
                                 <div class="alert alert-danger d-none" id="msg_div">
                                     <span id="res_message"></span>

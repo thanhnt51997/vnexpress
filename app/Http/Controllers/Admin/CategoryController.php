@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $categories = $this->categoryRepo->getListData('1', true);
+        $categories = $this->categoryRepo->getListData('1', false, null, true);
         if ($request->ajax()) {
             return view('backend.categories.dataTable', ['categories' => $categories])->render();
         }
@@ -72,7 +72,7 @@ class CategoryController extends Controller
             ]);
         }
         Category::create($input);
-        $categories = $this->categoryRepo->getListData('1', true);
+        $categories = $this->categoryRepo->getListData('1', true, null, true);
         return Response()->json([
             'status' => 1,
             'message' => 'Tạo danh mục bài viết thành công!',
@@ -114,7 +114,7 @@ class CategoryController extends Controller
             ]);
         }
         $category->update($input);
-        $categories = $this->categoryRepo->getListData('1', true);
+        $categories = $this->categoryRepo->getListData('1', true, null, true);
         return Response()->json([
             'status' => 1,
             'message' => 'Cập nhật danh mục thành công!',
@@ -137,8 +137,8 @@ class CategoryController extends Controller
         $id = $request->category_id;
         $category = $this->categoryRepo->findById($id);
         $category->delete();
-        $categories = $this->categoryRepo->getListData('1', true);
-        $posts = $this->postRepo->getListData(null, $id, null, false);
+        $categories = $this->categoryRepo->getListData('1', true, null, true);
+        $posts = $this->postRepo->getListData(null, null,'1', false, null, true);
         if (count($posts) > 0) {
             foreach ($posts as $post) {
                 $post->update(['category_id' => null]);

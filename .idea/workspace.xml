@@ -2,61 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f390f4d4-1196-4e19-8804-d9bc4b80abee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Repository/BaseRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Category/CategoryRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Category/CategoryRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Post/PostRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/RepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Role/RoleRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Role/RoleRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/User/UserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/User/UserRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/backend/categories/modal_delete_category.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/backend/roles/modal_delete_role.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/backend/users/profile.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/frontend/pages/modal_edit_comment.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Comment/CommentRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Comment/CommentRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/helpers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/RoleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/CommentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Role.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/PostPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/PostPolicy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/vendors/base/vendors.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendors/base/vendors.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/categories/dataTable.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/categories/dataTable.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/categories/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/categories/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/categories/indexScript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/categories/indexScript.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/layout/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/layout/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/layout/left.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/layout/left.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/posts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/posts/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/posts/dataTable.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/posts/dataTable.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/posts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/posts/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/posts/indexScript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/posts/indexScript.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/roles/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/roles/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/roles/dataTable.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/roles/dataTable.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/roles/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/roles/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/roles/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/roles/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/roles/indexScript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/roles/indexScript.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/users/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/users/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/users/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/users/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/auth.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/menu-top.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/menu-top.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/commentScript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/commentScript.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/dataComment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/dataComment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/BaseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/BaseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/Category/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Category/CategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/Category/CategoryRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Category/CategoryRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/Post/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Post/PostRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/Post/PostRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Post/PostRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/RepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/RepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/User/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/User/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/User/UserRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/User/UserRepositoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/auth/verify.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/inputComent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/inputComent.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/master/frontend.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/master/frontend.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/master/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/master/layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/master/indexScript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/master/indexScript.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -187,23 +161,24 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Repository" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Repository/Comment" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\kidsonline\vnexpress2\app\Repository\Comment" />
+      <recent name="D:\kidsonline\vnexpress2\app\Repository\Frontend" />
+      <recent name="D:\kidsonline\vnexpress2\app\Repository" />
+      <recent name="D:\kidsonline\vnexpress2\resources\views\backend\roles" />
+      <recent name="D:\kidsonline\vnexpress2\app\Repository\Category" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\kidsonline\vnexpress2\resources\views\frontend\auth" />
       <recent name="D:\kidsonline\vnexpress2\app\Repository" />
       <recent name="D:\kidsonline\vnexpress2\app\Repository\Post" />
       <recent name="D:\kidsonline\vnexpress2\resources\views\frontend\pages" />
       <recent name="D:\kidsonline\vnexpress2\resources\views\master" />
-      <recent name="D:\kidsonline\vnexpress2\resources\views\error" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\kidsonline\vnexpress2\app\Repository" />
-      <recent name="D:\kidsonline\vnexpress2\resources\views\backend\roles" />
-      <recent name="D:\kidsonline\vnexpress2\app\Repository\Category" />
-      <recent name="D:\kidsonline\vnexpress2\resources\views\backend" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -257,7 +232,8 @@
       <workItem from="1572660290111" duration="10096000" />
       <workItem from="1572748040448" duration="5754000" />
       <workItem from="1572776303988" duration="4847000" />
-      <workItem from="1572832675190" duration="2547000" />
+      <workItem from="1572832675190" duration="27968000" />
+      <workItem from="1572918535994" duration="7494000" />
     </task>
     <servers />
   </component>

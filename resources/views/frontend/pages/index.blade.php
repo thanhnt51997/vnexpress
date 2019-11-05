@@ -38,26 +38,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 border-right">
-                    @if(count($latest_pots) > 0)
-                        @foreach($latest_pots as $latest_pot)
-                            @if(count($latest_pot->latestPost) > 0)
+                    @if(count($latest_posts) > 0)
+                        @foreach($latest_posts as $latest_post)
+                            @if(!empty($latest_post->latestPost))
                                 <article class="list-news pt-2 pb-2 border-bottom">
                                     <h5 class="title-news "><a class="title"
-                                                               href="{{ url('', ['category'=>$latest_pot->slug,'slug'=>convert_vi_to_en($latest_pot->latestPost->title).'-'.$latest_pot->latestPost->id]) }}">{{ $latest_pot->latestPost->title }}</a>
-                                        @if(count($latest_pot->latestPost->comment)>0)
+                                                               href="{{ url('', ['category'=>$latest_post->slug,'slug'=>convert_vi_to_en($latest_post->latestPost->title).'-'.$latest_post->latestPost->id]) }}">{{ $latest_post->latestPost->title }}</a>
+                                        @if($latest_post->count_comment > 0)
                                             <a class="icon-comment"
                                                href=""><i
-                                                    class="fa fa-comment"><span>{{ $latest_pot->latestPost->comment }}</span></i></a>
+                                                    class="fa fa-comment"><span>{{ $latest_post->count_comment }}</span></i></a>
                                         @endif
                                     </h5>
                                     <div class="thumb-art">
                                         <a class="float-left mr-2"
-                                           href="{{ url('', ['category'=>$latest_pot->slug,'slug'=>convert_vi_to_en($latest_pot->latestPost->title).'-'.$latest_pot->latestPost->id]) }}"><img
+                                           href="{{ url('', ['category'=>$latest_post->slug,'slug'=>convert_vi_to_en($latest_post->latestPost->title).'-'.$latest_post->latestPost->id]) }}"><img
                                                 class="img-fluid"
-                                                src="{{ asset('storage/'.$latest_pot->latestPost->avatar) }}"
+                                                src="{{ asset('storage/'.$latest_post->latestPost->avatar) }}"
                                                 alt=""></a>
                                         <div class="description">
-                                            <p>{!!  getShortenSentence($latest_pot->latestPost->content, 30) !!}
+                                            <p>{!!  getShortenSentence($latest_post->latestPost->content, 30) !!}
                                             </p></div>
                                     </div>
                                 </article>
@@ -104,10 +104,10 @@
                                     <article class="col-lg-8 list-news">
                                         <h5 class="title-news"><a class="title"
                                                                   href="{{ url('', ['category'=>$category->slug,'slug'=>convert_vi_to_en($category->latest_posts[0]->title).'-'.$category->latest_posts[0]->id]) }}">{{$category->latest_posts[0]->title}}</a>
-                                            @if(count($latest_pot->latestPost->comment)>0)
+                                            @if($category->latest_posts[0]->count_comment > 0)
                                                 <a class="icon-comment"
                                                    href=""><i
-                                                        class="fa fa-comment"><span>{{ $category->latest_posts[0]->comment }}</span></i></a>
+                                                        class="fa fa-comment"><span>{{ $category->latest_posts[0]->count_comment }}</span></i></a>
                                             @endif
                                         </h5>
                                         <div class="thumb-art row">
@@ -181,7 +181,7 @@
                                         <ul class="d-flex flex-column justify-content-center">
                                             @foreach($most_view_posts as $most_view_post)
                                                 <li>
-                                                    <a href="">
+                                                    <a href="{{ url('', ['category'=>$most_view_post->category->slug,'slug'=>convert_vi_to_en($most_view_post->title).'-'.$most_view_post->id]) }}">
                                                         <h5>{{ $most_view_post->title }}
                                                             <span
                                                                 class="fa fa-eye text-info">{{ $most_view_post->view }}</span>

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Model\Category;
 use App\Model\Comment;
 use App\Model\Post;
+use App\Repository\Category\CategoryRepositoryInterface;
+use App\Repository\Comment\CommentRepositoryInterface;
+use App\Repository\Frontend\FrontendRepositoryInterface;
+use App\Repository\Post\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
@@ -13,28 +17,53 @@ use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
 {
+    protected $frontendRepo;
+    protected $categoryRepo;
+    protected $postRepo;
+    protected $commentRepo;
+
+    public function __construct(FrontendRepositoryInterface $frontendRepo, CategoryRepositoryInterface $categoryRepo, PostRepositoryInterface $postRepo, CommentRepositoryInterface $commentRepo)
+    {
+        $this->frontendRepo = $frontendRepo;
+        $this->categoryRepo = $categoryRepo;
+        $this->postRepo = $postRepo;
+        $this->commentRepo = $commentRepo;
+    }
+
     public function index()
     {
-        $category_desktop = Category::where('id', '<', '8')->get();
-        $category_mobile = Category::where('id', '>=', '8')->get();
-        $related_news = Post::with('category')->latest('created_at')->paginate(config('app.paginate'));
+        $related_news = $this->frontendRepo->getListData(null, null, false, '1', false, true);
         $hot_news = $related_news->first();
 
-        $latest_pots = Category::with('latestPost')->limit(4)->get();
-        $categories = Category::limit(4)->get();
-        foreach ($categories as $category) {
-            $category->load('latest_posts');
+        $latest_posts = $this->categoryRepo->getListData(null, true, '4', false, false);
+        foreach ($latest_posts as $post => $latest_post) {
+            $count_comments = $this->commentRepo->getListData(false, $latest_post->latestPost->id, false);
+            $latest_posts[$post]->count_comment = $count_comments->count();
         }
-        $most_view_posts = Post::latest('view')->limit(6)->get();
-        return view('frontend.pages.index', compact('category_mobile', 'category_desktop', 'hot_news', 'related_news', 'latest_pots', 'categories', 'most_view_posts', 'comments'));
+        $categories = $this->categoryRepo->getListData(null, true, '5', false, true);
+        foreach ($categories as $category) {
+            $posts_latest = $category->load('latest_posts');
+            foreach ($category->latest_posts as $post => $post_latest) {
+                $count_comments = $this->commentRepo->getListData(true, $post_latest->id, false);
+                $category->latest_posts[$post]->count_comment = $count_comments->count();
+            }
+        }
+        $most_view_posts = $this->postRepo->getListData(null, null, true, true, 6, true);
+
+        return view('frontend.pages.index', compact('hot_news', 'related_news', 'latest_posts', 'categories', 'most_view_posts', 'comments'));
     }
 
     public function postView($category, $slug)
     {
         $string_arr = explode('-', $slug);
         $id = (int)end($string_arr);
-        $post = Post::with('category')->findOrFail($id);
+        $post = $this->postRepo->findById($id, 'category');
         if ($post->category->slug != $category) {
+            return abort(404);
+        }
+
+        $category_info = $this->categoryRepo->getInfoByField(['slug' => $category]);
+        if (empty($category_info)) {
             return abort(404);
         }
         $viewed = Session::get('viewed_post', []);
@@ -42,15 +71,10 @@ class FrontendController extends Controller
             $post->increment('view');
             Session::push('viewed_post', $post->id);
         }
-        $comments = Comment::with('user', 'post')->where('post_id',$id)->orderBy('created_at', 'desc')->get();
-        $related_pots = Post::whereHas('category', function ($q) use ($post) {
-            return $q->where('slug', $post->category->slug);
-        })->with('category')
-            ->where('id', '!=', $id) // So you won't fetch same post
-            ->limit(5)
-            ->get();
+        $comments = $this->commentRepo->getListData(true, $id, false);
+        $related_posts = $this->postRepo->getListData(null, $category_info->id, 1, false, 4, false, $post->id);
         Carbon::setLocale('vi');
         $now = Carbon::now();
-        return view('frontend.pages.post', compact('post', 'related_pots','comments','now'));
+        return view('frontend.pages.post', compact('post', 'related_posts', 'comments', 'now'));
     }
 }

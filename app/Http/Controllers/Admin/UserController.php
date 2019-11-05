@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Role;
 use App\Model\User;
-use App\Repository\Role\UserRepositoryInterface;
+use App\Repository\Role\RoleRepositoryInterface;
+use App\Repository\User\UserRepositoryInterface;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,21 +17,23 @@ class UserController extends Controller
 {
     protected $user;
     protected $userRepo;
+    protected $roleRepo;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(User $user, UserRepositoryInterface $userRepo)
+    public function __construct(User $user, UserRepositoryInterface $userRepo, RoleRepositoryInterface $roleRepo)
     {
         $this->user = $user;
         $this->userRepo = $userRepo;
+        $this->roleRepo = $roleRepo;
     }
 
     public function index(Request $request)
     {
-        $users = $this->userRepo->getListData('1',true);
-//        $users = $this->user->with('roles')->paginate(config('app.paginate'));
+        $users = $this->userRepo->getListData(null, true);
         if ($request->ajax()) {
             return view('backend.users.dataTable', ['users' => $users])->render();
         }
@@ -45,7 +48,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        $roles = $this->roleRepo->getModelAll();
         return view('backend.users.create', compact('roles'));
     }
 
@@ -89,18 +92,18 @@ class UserController extends Controller
         if (empty($data['phone'])) {
             $message = 'Vui lòng nhập số điện thoại';
         }
-        if (empty($data['phone'])) {
+        if (empty($data['status'])) {
             $message = 'Vui lòng chọn status cho user';
         }
-        $email = User::where('email', $data['email'])->first();
+        $email = $this->userRepo->getDataValidate(null, $data['email'], null, null);
         if (!empty($email)) {
             $message = 'Email đã tồn tại. Vui lòng kiểm tra lại';
         }
-        $phone = User::where('phone', $data['phone'])->first();
+        $phone = $this->userRepo->getDataValidate(null, null, $data['phone'], null);
         if (!empty($phone)) {
             $message = 'Số điện thoại đã tồn tại. Vui lòng kiểm tra lại';
         }
-        $userName = User::where('name', $data['name'])->first();
+        $userName = $this->userRepo->getDataValidate($data['name'], null, null, null);
         if (!empty($userName)) {
             $message = 'Tên người dùng đã tồn tại. Vui lòng kiểm tra lại';
         }
@@ -126,8 +129,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::with('roles')->findOrFail($id);
-        $roles = Role::all();
+        $user= $this->userRepo->findById($id, 'roles');
+        $roles = $this->roleRepo->getModelAll();
         $data = [
             'user' => $user,
             'roles' => $roles,
@@ -144,7 +147,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_info = User::find($id);
+        $user_info =  $this->userRepo->findById($id, null);
         if (empty($user_info)) {
             $error = 'Người dùng không tồn tại!';
             return $error;
@@ -160,11 +163,11 @@ class UserController extends Controller
                 'message' => $validation
             ]);
         }
-        User::with('roles')->find($id)->roles()->sync($request->role_id);
+        $this->userRepo->findById($id, null)->roles()->sync($request->role_id);
         $user_info->update($input);
         return Response()->json([
             'status' => 1,
-            'message' => 'Cập nhật thông tin user thành công!'
+            'message' => 'Cập nhật thông tin user thành công!',
         ]);
     }
 
@@ -172,15 +175,15 @@ class UserController extends Controller
     {
         $message = null;
         $this->validateData($input);
-        $email = User::where('email', $input['email'])->where('id', '<>', $user_info->id)->first();
+        $email = $this->userRepo->getDataValidate(null,$input['email'],  null, $user_info->id);
         if (!empty($email)) {
             $message = 'Email đã tồn tại. Vui lòng kiểm tra lại';
         }
-        $name = User::where('name', $input['name'])->where('id', '<>', $user_info->id)->first();
+        $name = $this->userRepo->getDataValidate($input['name'],null,  null, $user_info->id);
         if (!empty($name)) {
             $message = 'Tên người dùng đã tồn tại. Vui lòng kiểm tra lại';
         }
-        $phone = User::where('phone', $input['phone'])->where('id', '<>', $user_info->id)->first();
+        $phone = $this->userRepo->getDataValidate(null, null, $input['phone'], $user_info->id);
         if (!empty($phone)) {
             $message = 'Số điện thoại đã tồn tại. Vui lòng kiểm tra lại';
         }
@@ -196,7 +199,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = $this->userRepo->findById($id,null);
         $userLogin = Auth::user()->id;
         if ($userLogin == $id) {
             return Response()->json([

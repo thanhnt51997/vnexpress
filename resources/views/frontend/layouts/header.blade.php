@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <div class="header-left w-75">
                     <ul class="contact-header d-flex justify-content-between ">
-                        <li class=""><h6>Thứ ba, 15/10/2019, 16:31 (GMT+7)</h6></li>
+                        <li class=""><h6>{{ $time_now }}</h6></li>
                         <span class="border-right"></span>
                         <li class=""><a href="#" title=""><h6>24h qua</h6></a></li>
                         <span class="border-right"></span>

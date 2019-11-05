@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 interface RepositoryInterface
 {
-    public function findById(int $id);
+    public function findById(int $id, $relationship);
     public function getModelAll();
+    public function getInfoByField($fields);
 }

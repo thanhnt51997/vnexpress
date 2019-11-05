@@ -12,8 +12,8 @@
 */
 
 use App\Http\Controllers\Admin\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -76,6 +76,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('permissions/delete/{id}', 'PermissionController@destroy')->name('permissions.destroy');
 });
 
+Auth::routes(['verify' => true]);
+
 Route::group(['namespace' => 'Frontend', 'prefix' => '/'], function () {
     Route::get('/', 'FrontendController@index')->name('frontend');
     Route::get('/modal_register', 'RegistrationController@create')->name('frontend.getRegister');
@@ -93,5 +95,7 @@ Route::group(['namespace' => 'Frontend', 'prefix' => '/'], function () {
     Route::get('/modal_edit_comment', 'CommentController@getEditModal')->name('frontend.comment.getEditModal');
     Route::post('comment/edit', 'CommentController@update')->name('frontend.comment.update');
 });
+
+
 
 
