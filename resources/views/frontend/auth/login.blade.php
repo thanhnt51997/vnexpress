@@ -51,12 +51,30 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4 col-md-9 col-sm-12 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember"
+                                           id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions">
                             <div class="row">
                                 <div class="col-lg-9 ml-lg-auto">
                                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                                    @if (Route::has('frontend.password_reset'))
+                                        <a class="btn btn-link" href="{{ route('frontend.password_reset') }}">
+                                            {{ __('Quên mật khẩu?') }}
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

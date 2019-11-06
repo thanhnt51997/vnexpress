@@ -76,16 +76,20 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('permissions/delete/{id}', 'PermissionController@destroy')->name('permissions.destroy');
 });
 
-Auth::routes(['verify' => true]);
+//Auth::routes(['verify' => true]);
 
 Route::group(['namespace' => 'Frontend', 'prefix' => '/'], function () {
     Route::get('/', 'FrontendController@index')->name('frontend');
     Route::get('/modal_register', 'RegistrationController@create')->name('frontend.getRegister');
     Route::post('/register', 'RegistrationController@store')->name('frontend.register');
-    Route::get('/logout', 'RegistrationController@logout')->name('frontend.logout');
+    Route::get('/user/verify/{token}', 'RegistrationController@verifyUser')->name('frontend.verifyUser');
+    Route::get('/logoutUser1', 'RegistrationController@logout')->name('frontend.logout1');
     Route::get('/modal_login', 'LoginController@getLogin')->name('frontend.getLogin');
     Route::post('/loginUser', 'LoginController@login')->name('frontend.login');
 
+    Route::get('/profile/{user}','ProfileController@index')->name('frontend.profile');
+
+    Route::get('password/reset', 'ForgotPasswordController@requestForm')->name('frontend.password_reset');
 
     Route::get('/{category}/{slug}','FrontendController@postView')->name('post.view');
 

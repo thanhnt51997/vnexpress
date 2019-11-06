@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Mail\VerifyMail;
 use App\Model\Role;
 use App\Model\User;
+use App\VerifyUser;
 use http\Env\Response;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -14,9 +16,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
-    use RegistersUsers;
-
-    protected $redirectTo = '/home';
 
     public function create()
     {
@@ -25,12 +24,13 @@ class RegistrationController extends Controller
             'modal_html' => view('frontend.auth.register')->render()
         ]);
     }
+
     public function __construct()
     {
-        $this->middleware('guest');
+//        $this->middleware('guest');
     }
 
-    protected function validator($input)
+    protected function validateData($input)
     {
         $message = null;
         if (empty($input['email'])) {
@@ -63,13 +63,15 @@ class RegistrationController extends Controller
         return $message;
     }
 
-    public function store(Request $request)
+
+    protected function store(Request $request)
     {
         $input = $request->all();
-        $validation = $this->validator($input);
+        $validation = $this->validateData($input);
         if (!empty($validation)) {
             return Response()->json([
-                'message' => $validation
+                'status' => 0,
+                'message' => $validation,
             ]);
         }
         $user = User::create([
@@ -80,11 +82,35 @@ class RegistrationController extends Controller
             'password' => Hash::make($input['password']),
         ]);
         $user->roles()->attach(['role_id' => 3]);
-//        Auth::login($user);
+        $verifyUser = VerifyUser::create([
+            'user_id' => $user->id,
+            'token' => sha1(time())
+        ]);
+        \Mail::to($user->email)->send(new VerifyMail($user));
         return Response()->json([
             'status' => 1,
-            'message' => 'Tạo tài khoản thành công!'
+            'message' => 'Đăng ký tài ưkhoản thành công! Vui lòng kiểm tra email để kích hoạt!',
+            'data' => $user
         ]);
+    }
+
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+        if (isset($verifyUser)) {
+            $user_id = $verifyUser->user_id;
+            $user = User::where('id', $user_id)->first();
+            if (!$user->status) {
+                $verifyUser->user->status = 1;
+                $verifyUser->user->save();
+                $status = 'Chúc mừng tài khoản của bạn đã được kích hoạt! Vui lòng ';
+            } else {
+                $status = "Tài khoản của bạn đã được kích hoạt! Vui lòng";
+            }
+        } else {
+            return view('emails.notification_verify')->with('warning', "Sorry your email cannot be identified.");
+        }
+        return view('emails.notification_verify')->with(['status' => $status, 'user' => $user]);
     }
 
     public function logout(Request $request)

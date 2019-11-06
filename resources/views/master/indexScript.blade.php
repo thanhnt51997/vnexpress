@@ -58,13 +58,12 @@
                 if (response.status == 1) {
                     toastr.success(response.message);
                     $('#modal_register_user').modal('hide');
-                    location.replace("{{ route('frontend') }}");
                 } else {
                     toastr.error(response.message);
                 }
             },
             error: function (response) {
-                toastr.error(response.message);
+                toastr.error(response.responseJSON.message);
             }
         });
     }

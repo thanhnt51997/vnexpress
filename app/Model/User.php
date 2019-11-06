@@ -2,13 +2,14 @@
 
 namespace App\Model;
 
+use App\VerifyUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -76,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function verifyUser()
     {
-        return $this->hasOne('App\VerifyUser');
+        return $this->hasOne(VerifyUser::class);
     }
 
     public function superAdmin()
@@ -84,9 +85,9 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($this->roles as $role) {
             $permission_arr = json_decode($role->permissions, true);
             $admin = array_key_exists('user', $permission_arr);
-                if ($admin && $permission_arr['user']) {
-                    return true;
-                }
+            if ($admin && $permission_arr['user']) {
+                return true;
+            }
         }
         return false;
     }

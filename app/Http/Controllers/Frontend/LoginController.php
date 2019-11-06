@@ -13,7 +13,6 @@ class LoginController extends Controller
     public function __construct()
 
     {
-        $this->middleware('verified');
         $this->middleware(['checkStatus'])->except('logout');
 
     }
